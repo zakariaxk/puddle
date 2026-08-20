@@ -52,16 +52,16 @@ export type ForecastHistoryItem = {
 
 function getPersistenceClient(): PersistenceClient | null {
   const url = process.env.SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !serviceRoleKey) return null;
+  const secretKey = process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !secretKey) return null;
 
-  return createClient<Database>(url, serviceRoleKey, {
+  return createClient<Database>(url, secretKey, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
 }
 
 export function isPersistenceConfigured() {
-  return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return Boolean(process.env.SUPABASE_URL && (process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY));
 }
 
 export async function recordForecast({ forecast }: ForecastRunInput) {

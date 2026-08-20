@@ -38,7 +38,7 @@ Forecast provenance is stored only when both server-only variables in `.env.loca
 
 ```bash
 SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+SUPABASE_SECRET_KEY=your-supabase-secret-key
 ```
 
 The service role key is intentionally never exposed to the browser. Without those variables (or while Supabase is unavailable), anonymous live forecasts continue normally and the history endpoint returns an unavailable persistence state.
