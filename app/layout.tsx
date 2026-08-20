@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Puddle",
-  description: "Know before you go.",
+  description: "Know if the rain is actually coming your way.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
