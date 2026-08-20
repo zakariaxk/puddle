@@ -21,7 +21,7 @@ export async function searchCentralFloridaLocations(query: string): Promise<Geoc
   let response: Response;
   try {
     response = await fetch("https://nominatim.openstreetmap.org/search?" + new URLSearchParams({
-      q: `${normalizedQuery}, Central Florida`,
+      q: normalizedQuery,
       format: "jsonv2",
       addressdetails: "1",
       limit: "6",
