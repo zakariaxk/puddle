@@ -1,17 +1,49 @@
 "use client";
 
-import Image from "next/image";
 import { FormEvent, useState } from "react";
+import type { GeocodingResult, LocationSelection } from "@/lib/location";
+import { LocationMap } from "./location-map";
 
 const horizons = ["15 min", "30 min", "1 hour", "2 hours", "6 hours"];
 
 export function PuddleShell() {
-  const [searchMessage, setSearchMessage] = useState("");
+  const [searchMessage, setSearchMessage] = useState("Search Central Florida places or addresses.");
+  const [searchResults, setSearchResults] = useState<GeocodingResult[]>([]);
+  const [selection, setSelection] = useState<LocationSelection | null>(null);
+  const [isSearching, setIsSearching] = useState(false);
   const [whyOpen, setWhyOpen] = useState(false);
 
-  function handleSearch(event: FormEvent<HTMLFormElement>) {
+  async function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setSearchMessage("Location search will be ready with the live map.");
+    const form = new FormData(event.currentTarget);
+    const query = String(form.get("place") ?? "").trim();
+
+    if (query.length < 2) {
+      setSearchResults([]);
+      setSearchMessage("Enter at least two characters to search Central Florida.");
+      return;
+    }
+
+    setIsSearching(true);
+    setSearchMessage("Finding places in Central Florida...");
+    try {
+      const response = await fetch(`/api/location/search?q=${encodeURIComponent(query)}`);
+      const body = await response.json() as { error?: string; results?: GeocodingResult[] };
+      if (!response.ok) throw new Error(body.error);
+      setSearchResults(body.results ?? []);
+      setSearchMessage(body.results?.length ? "Choose a result to set your location." : "No Central Florida places matched that search.");
+    } catch (error) {
+      setSearchResults([]);
+      setSearchMessage(error instanceof Error && error.message ? error.message : "Location search is temporarily unavailable. Try again in a moment.");
+    } finally {
+      setIsSearching(false);
+    }
+  }
+
+  function selectLocation(location: LocationSelection) {
+    setSelection(location);
+    setSearchResults([]);
+    setSearchMessage(`${location.name} is selected.`);
   }
 
   return (
@@ -46,9 +78,22 @@ export function PuddleShell() {
                 placeholder="Search a place or address"
                 autoComplete="off"
               />
-              <button type="submit">Search</button>
+              <button type="submit" disabled={isSearching}>{isSearching ? "Searching" : "Search"}</button>
             </form>
             <p className="search-status" aria-live="polite">{searchMessage}</p>
+            {searchResults.length ? (
+              <ul className="search-results" aria-label="Location results">
+                {searchResults.map((result) => (
+                  <li key={result.id}>
+                    <button type="button" onClick={() => selectLocation(result)}>
+                      <strong>{result.name.split(",")[0]}</strong>
+                      <span>{result.name}</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {selection ? <p className="selected-location" aria-live="polite"><span>Selected location</span>{selection.name}</p> : null}
           </div>
 
           <div className="forecast-unavailable" aria-labelledby="forecast-title">
@@ -90,25 +135,7 @@ export function PuddleShell() {
           ) : null}
         </div>
 
-        <div className="map-shell" aria-label="Map loading surface">
-          <div className="map-chrome">
-            <span>Rain map</span>
-            <span className="map-status">Preparing map</span>
-          </div>
-          <div className="map-skeleton" aria-hidden="true">
-            <div className="map-contour contour-one" />
-            <div className="map-contour contour-two" />
-            <div className="map-contour contour-three" />
-            <div className="map-location-pulse" />
-          </div>
-          <div className="map-loading-note">
-            <Image src="/mascot/puddle-mascot.png" alt="Puddle mascot watching the sky" width={82} height={82} priority />
-            <div>
-              <strong>Map is getting ready</strong>
-              <span>Live rain appears here soon.</span>
-            </div>
-          </div>
-        </div>
+        <LocationMap selection={selection} onSelect={selectLocation} />
       </section>
     </main>
   );
