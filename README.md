@@ -48,13 +48,23 @@ The input has `snapshots` (with `issuedAt`, `availableAt`, location, target wind
 
 ## Puddle model training (Phase 9)
 
-The first production candidate is deliberately small: a calibrated logistic regression using the archived NWS next-hour probability. Training is chronological: all training rows precede the held-out validation period. The trainer rejects leakage, requires at least 52 eligible rows, applies Platt calibration, and writes an artifact only when the calibrated model improves held-out Brier score over archived NWS guidance with both rain and non-rain validation examples.
+The first production candidate is deliberately small: a calibrated logistic regression using an archived next-hour forecast feature. Training is chronological: all training rows precede the held-out validation period. The trainer rejects leakage, requires at least 52 eligible rows, applies Platt calibration, and writes an artifact only when the calibrated model improves held-out Brier score over its archived baseline with both rain and non-rain validation examples.
 
 ```bash
 npm run model:train -- data/derived/central-florida.json data/models/puddle-logistic-v1.json 2026-08-21T00:00:00.000Z
 ```
 
 The generated artifact records its feature contract, normalization, calibration, source dataset schema, time range, and validation metrics. `data/models` is ignored by default: review a candidate artifact before promoting it through the release process. When no valid artifact is present, malformed, or lacks a feature available at inference time, the live forecast remains the transparent provider-derived NWS guidance. This avoids unsupported performance claims while the historical archive grows.
+
+For the archived HRRR candidate, use the NOAA-backed collector in an environment with `herbie-data` and `cfgrib` installed. It pairs NOAA HRRR 0–1 hour accumulated precipitation at KMLB's nearest 3 km grid point with NCEI Global Hourly AA1 precipitation observations, preserving source URLs and timestamps.
+
+```bash
+python scripts/gather-hrrr-historical-data.py 2025-07-01T00:00:00Z 2025-07-13T00:00:00Z 3 data/raw/hrrr-kmlb-2025-07.json
+npm run dataset:build -- data/raw/hrrr-kmlb-2025-07.json data/derived/hrrr-kmlb-2025-07.json 2026-08-20T00:00:00.000Z
+npm run model:train -- data/derived/hrrr-kmlb-2025-07.json data/models/puddle-hrrr-logistic-candidate-v1.json 2026-08-20T00:00:00.000Z puddle-hrrr-logistic-candidate-v1 hrrrPrecipitationMm
+```
+
+The HRRR artifact is an offline candidate only: Puddle does not yet acquire HRRR live, so inference correctly falls back to provider-derived NWS guidance rather than substituting a non-parity feature.
 
 ## Persistence (Phase 6)
 

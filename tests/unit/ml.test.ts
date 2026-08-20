@@ -16,7 +16,7 @@ function dataset(rows = 80): HistoricalDataset {
       return {
         predictionId: `row-${index}`, issuedAt, dataAsOf: issuedAt, location: { latitude: 28, longitude: -81 }, targetStart, targetEnd: new Date(Date.parse(targetStart) + 60 * 60_000).toISOString(),
         target: { rainObserved: probability > 50, precipitationMm: probability > 50 ? 1 : 0, observedAt: targetStart, sourceId: `station-${index}` },
-        features: { nwsProbabilityPercent: probability }, baselines: { nws: probability, hrrr: null, equalWeightEnsemble: null }, provenance: { forecastSourceIds: ["nws"], outcomeSourceId: `station-${index}` },
+        features: { nwsProbabilityPercent: probability, hrrrPrecipitationMm: probability > 50 ? 1.5 : 0 }, baselines: { nws: probability, hrrr: probability > 50 ? 68 : 5, equalWeightEnsemble: null }, provenance: { forecastSourceIds: ["nws", "hrrr"], outcomeSourceId: `station-${index}` },
       };
     }),
   };
@@ -37,7 +37,7 @@ describe("Puddle model", () => {
     const result = trainPuddleModel(dataset(), "2026-08-21T00:00:00.000Z");
     expect(result.artifact).not.toBeNull();
     expect(result.artifact?.validation).toMatchObject({ rowCount: 16, positiveCount: 8, selected: true });
-    expect(result.artifact?.validation.brierScore).toBeLessThan(result.artifact?.validation.nwsBrierScore ?? 1);
+    expect(result.artifact?.validation.brierScore).toBeLessThan(result.artifact?.validation.baselineBrierScore ?? 1);
     expect(validatePuddleModelArtifact(JSON.parse(JSON.stringify(result.artifact)))).toBe(true);
   });
 
@@ -50,11 +50,18 @@ describe("Puddle model", () => {
 
   it("shares the NWS feature contract with inference and falls back when a feature is unavailable", () => {
     const artifact = trainPuddleModel(dataset(), "2026-08-21T00:00:00.000Z").artifact!;
-    expect(extractLiveModelFeatures(snapshot, Date.parse("2026-08-20T12:00:00.000Z"))).toEqual([60]);
+    expect(extractLiveModelFeatures(snapshot, artifact.featureNames, Date.parse("2026-08-20T12:00:00.000Z"))).toEqual([60]);
     expect(calibratedProbability([60], artifact)).toBeGreaterThanOrEqual(0);
     const applied = applyPuddleModel(forecast, snapshot, artifact, Date.parse("2026-08-20T12:00:00.000Z"));
     expect(applied.modelVersion).toBe(artifact.version);
     expect(applied.horizons.find((horizon) => horizon.minutes === 60)?.probabilityPercent).not.toBe(60);
     expect(applyPuddleModel(forecast, { ...snapshot, model: null }, artifact)).toEqual(forecast);
+  });
+
+  it("keeps an evaluated HRRR candidate in fallback until its live feature is available", () => {
+    const result = trainPuddleModel(dataset(), "2026-08-21T00:00:00.000Z", "puddle-hrrr-logistic-candidate-v1", ["hrrrPrecipitationMm"]);
+    expect(result.artifact?.featureNames).toEqual(["hrrrPrecipitationMm"]);
+    expect(extractLiveModelFeatures(snapshot, result.artifact!.featureNames)).toBeNull();
+    expect(applyPuddleModel(forecast, snapshot, result.artifact!)).toEqual(forecast);
   });
 });

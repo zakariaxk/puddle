@@ -1,0 +1,2327 @@
+{
+  "metadata": {
+    "schemaVersion": "phase-8-v1",
+    "generatedAt": "2026-08-20T00:00:00.000Z",
+    "bounds": {
+      "west": -81.9,
+      "east": -80.1,
+      "south": 27.4,
+      "north": 29.1
+    },
+    "measurableRainThresholdMm": 0.1,
+    "rowCount": 72,
+    "inputSnapshotCount": 72,
+    "inputObservationCount": 72,
+    "excluded": {
+      "futureForecast": 0,
+      "outOfBounds": 0,
+      "missingOutcome": 0
+    }
+  },
+  "rows": [
+    {
+      "predictionId": "hrrr-kmlb-20250702T0000Z",
+      "issuedAt": "2025-07-02T00:00:00Z",
+      "dataAsOf": "2025-07-02T00:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T00:00:00Z",
+      "targetEnd": "2025-07-02T01:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T01:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T00:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t00z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T00:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0100Z",
+      "issuedAt": "2025-07-02T01:00:00Z",
+      "dataAsOf": "2025-07-02T01:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T01:00:00Z",
+      "targetEnd": "2025-07-02T02:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T02:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T01:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t01z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T01:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0200Z",
+      "issuedAt": "2025-07-02T02:00:00Z",
+      "dataAsOf": "2025-07-02T02:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T02:00:00Z",
+      "targetEnd": "2025-07-02T03:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T03:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T02:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t02z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T02:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0300Z",
+      "issuedAt": "2025-07-02T03:00:00Z",
+      "dataAsOf": "2025-07-02T03:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T03:00:00Z",
+      "targetEnd": "2025-07-02T04:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T04:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T03:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t03z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T03:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0400Z",
+      "issuedAt": "2025-07-02T04:00:00Z",
+      "dataAsOf": "2025-07-02T04:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T04:00:00Z",
+      "targetEnd": "2025-07-02T05:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T05:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T04:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t04z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T04:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0500Z",
+      "issuedAt": "2025-07-02T05:00:00Z",
+      "dataAsOf": "2025-07-02T05:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T05:00:00Z",
+      "targetEnd": "2025-07-02T06:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T06:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T05:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t05z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T05:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0600Z",
+      "issuedAt": "2025-07-02T06:00:00Z",
+      "dataAsOf": "2025-07-02T06:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T06:00:00Z",
+      "targetEnd": "2025-07-02T07:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T07:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T06:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t06z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T06:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0700Z",
+      "issuedAt": "2025-07-02T07:00:00Z",
+      "dataAsOf": "2025-07-02T07:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T07:00:00Z",
+      "targetEnd": "2025-07-02T08:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T08:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T07:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t07z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T07:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0800Z",
+      "issuedAt": "2025-07-02T08:00:00Z",
+      "dataAsOf": "2025-07-02T08:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T08:00:00Z",
+      "targetEnd": "2025-07-02T09:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T09:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T08:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t08z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T08:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T0900Z",
+      "issuedAt": "2025-07-02T09:00:00Z",
+      "dataAsOf": "2025-07-02T09:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T09:00:00Z",
+      "targetEnd": "2025-07-02T10:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T10:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T09:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t09z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T09:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1000Z",
+      "issuedAt": "2025-07-02T10:00:00Z",
+      "dataAsOf": "2025-07-02T10:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T10:00:00Z",
+      "targetEnd": "2025-07-02T11:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T11:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T10:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t10z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T10:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1100Z",
+      "issuedAt": "2025-07-02T11:00:00Z",
+      "dataAsOf": "2025-07-02T11:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T11:00:00Z",
+      "targetEnd": "2025-07-02T12:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T12:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T11:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t11z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T11:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1200Z",
+      "issuedAt": "2025-07-02T12:00:00Z",
+      "dataAsOf": "2025-07-02T12:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T12:00:00Z",
+      "targetEnd": "2025-07-02T13:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T13:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T12:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t12z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T12:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1300Z",
+      "issuedAt": "2025-07-02T13:00:00Z",
+      "dataAsOf": "2025-07-02T13:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T13:00:00Z",
+      "targetEnd": "2025-07-02T14:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T14:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T13:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t13z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T13:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1400Z",
+      "issuedAt": "2025-07-02T14:00:00Z",
+      "dataAsOf": "2025-07-02T14:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T14:00:00Z",
+      "targetEnd": "2025-07-02T15:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T15:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T14:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t14z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T14:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1500Z",
+      "issuedAt": "2025-07-02T15:00:00Z",
+      "dataAsOf": "2025-07-02T15:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T15:00:00Z",
+      "targetEnd": "2025-07-02T16:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T16:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T15:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t15z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T15:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1600Z",
+      "issuedAt": "2025-07-02T16:00:00Z",
+      "dataAsOf": "2025-07-02T16:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T16:00:00Z",
+      "targetEnd": "2025-07-02T17:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T17:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T16:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t16z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T16:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1700Z",
+      "issuedAt": "2025-07-02T17:00:00Z",
+      "dataAsOf": "2025-07-02T17:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T17:00:00Z",
+      "targetEnd": "2025-07-02T18:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T18:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T18:28:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t17z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T18:28:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1800Z",
+      "issuedAt": "2025-07-02T18:00:00Z",
+      "dataAsOf": "2025-07-02T18:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T18:00:00Z",
+      "targetEnd": "2025-07-02T19:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T19:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T18:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t18z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T18:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T1900Z",
+      "issuedAt": "2025-07-02T19:00:00Z",
+      "dataAsOf": "2025-07-02T19:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T19:00:00Z",
+      "targetEnd": "2025-07-02T20:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T20:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T19:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t19z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T19:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T2000Z",
+      "issuedAt": "2025-07-02T20:00:00Z",
+      "dataAsOf": "2025-07-02T20:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T20:00:00Z",
+      "targetEnd": "2025-07-02T21:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 0.3,
+        "observedAt": "2025-07-02T21:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T20:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t20z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T20:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T2100Z",
+      "issuedAt": "2025-07-02T21:00:00Z",
+      "dataAsOf": "2025-07-02T21:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T21:00:00Z",
+      "targetEnd": "2025-07-02T22:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 0.3,
+        "observedAt": "2025-07-02T22:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T21:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t21z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T21:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T2200Z",
+      "issuedAt": "2025-07-02T22:00:00Z",
+      "dataAsOf": "2025-07-02T22:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T22:00:00Z",
+      "targetEnd": "2025-07-02T23:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-02T23:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T22:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t22z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T22:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250702T2300Z",
+      "issuedAt": "2025-07-02T23:00:00Z",
+      "dataAsOf": "2025-07-02T23:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-02T23:00:00Z",
+      "targetEnd": "2025-07-03T00:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T00:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-02T23:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250702/conus/hrrr.t23z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-02T23:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0000Z",
+      "issuedAt": "2025-07-03T00:00:00Z",
+      "dataAsOf": "2025-07-03T00:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T00:00:00Z",
+      "targetEnd": "2025-07-03T01:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T01:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T00:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t00z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T00:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0100Z",
+      "issuedAt": "2025-07-03T01:00:00Z",
+      "dataAsOf": "2025-07-03T01:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T01:00:00Z",
+      "targetEnd": "2025-07-03T02:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T02:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T01:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t01z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T01:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0200Z",
+      "issuedAt": "2025-07-03T02:00:00Z",
+      "dataAsOf": "2025-07-03T02:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T02:00:00Z",
+      "targetEnd": "2025-07-03T03:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T03:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T02:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t02z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T02:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0300Z",
+      "issuedAt": "2025-07-03T03:00:00Z",
+      "dataAsOf": "2025-07-03T03:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T03:00:00Z",
+      "targetEnd": "2025-07-03T04:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T04:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T03:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t03z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T03:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0400Z",
+      "issuedAt": "2025-07-03T04:00:00Z",
+      "dataAsOf": "2025-07-03T04:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T04:00:00Z",
+      "targetEnd": "2025-07-03T05:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T05:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T04:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t04z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T04:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0500Z",
+      "issuedAt": "2025-07-03T05:00:00Z",
+      "dataAsOf": "2025-07-03T05:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T05:00:00Z",
+      "targetEnd": "2025-07-03T06:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T06:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T05:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t05z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T05:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0600Z",
+      "issuedAt": "2025-07-03T06:00:00Z",
+      "dataAsOf": "2025-07-03T06:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T06:00:00Z",
+      "targetEnd": "2025-07-03T07:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T07:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T06:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t06z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T06:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0700Z",
+      "issuedAt": "2025-07-03T07:00:00Z",
+      "dataAsOf": "2025-07-03T07:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T07:00:00Z",
+      "targetEnd": "2025-07-03T08:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T08:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T07:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t07z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T07:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0800Z",
+      "issuedAt": "2025-07-03T08:00:00Z",
+      "dataAsOf": "2025-07-03T08:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T08:00:00Z",
+      "targetEnd": "2025-07-03T09:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T09:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T08:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t08z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T08:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T0900Z",
+      "issuedAt": "2025-07-03T09:00:00Z",
+      "dataAsOf": "2025-07-03T09:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T09:00:00Z",
+      "targetEnd": "2025-07-03T10:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T10:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T09:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t09z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T09:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1000Z",
+      "issuedAt": "2025-07-03T10:00:00Z",
+      "dataAsOf": "2025-07-03T10:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T10:00:00Z",
+      "targetEnd": "2025-07-03T11:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T11:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T10:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t10z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T10:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1100Z",
+      "issuedAt": "2025-07-03T11:00:00Z",
+      "dataAsOf": "2025-07-03T11:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T11:00:00Z",
+      "targetEnd": "2025-07-03T12:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T12:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T11:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t11z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T11:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1200Z",
+      "issuedAt": "2025-07-03T12:00:00Z",
+      "dataAsOf": "2025-07-03T12:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T12:00:00Z",
+      "targetEnd": "2025-07-03T13:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T13:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T12:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t12z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T12:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1300Z",
+      "issuedAt": "2025-07-03T13:00:00Z",
+      "dataAsOf": "2025-07-03T13:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T13:00:00Z",
+      "targetEnd": "2025-07-03T14:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T14:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T13:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t13z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T13:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1400Z",
+      "issuedAt": "2025-07-03T14:00:00Z",
+      "dataAsOf": "2025-07-03T14:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T14:00:00Z",
+      "targetEnd": "2025-07-03T15:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T15:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T14:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t14z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T14:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1500Z",
+      "issuedAt": "2025-07-03T15:00:00Z",
+      "dataAsOf": "2025-07-03T15:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T15:00:00Z",
+      "targetEnd": "2025-07-03T16:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T16:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T16:07:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t15z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T16:07:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1600Z",
+      "issuedAt": "2025-07-03T16:00:00Z",
+      "dataAsOf": "2025-07-03T16:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T16:00:00Z",
+      "targetEnd": "2025-07-03T17:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T17:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T16:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t16z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T16:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1700Z",
+      "issuedAt": "2025-07-03T17:00:00Z",
+      "dataAsOf": "2025-07-03T17:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T17:00:00Z",
+      "targetEnd": "2025-07-03T18:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T18:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T18:20:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t17z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T18:20:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1800Z",
+      "issuedAt": "2025-07-03T18:00:00Z",
+      "dataAsOf": "2025-07-03T18:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T18:00:00Z",
+      "targetEnd": "2025-07-03T19:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T19:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T18:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t18z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T18:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T1900Z",
+      "issuedAt": "2025-07-03T19:00:00Z",
+      "dataAsOf": "2025-07-03T19:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T19:00:00Z",
+      "targetEnd": "2025-07-03T20:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 17.5,
+        "observedAt": "2025-07-03T20:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T20:27:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t19z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T20:27:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T2000Z",
+      "issuedAt": "2025-07-03T20:00:00Z",
+      "dataAsOf": "2025-07-03T20:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T20:00:00Z",
+      "targetEnd": "2025-07-03T21:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 1.2,
+        "observedAt": "2025-07-03T21:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T21:26:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t20z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T21:26:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T2100Z",
+      "issuedAt": "2025-07-03T21:00:00Z",
+      "dataAsOf": "2025-07-03T21:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T21:00:00Z",
+      "targetEnd": "2025-07-03T22:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-03T22:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T22:12:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t21z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T22:12:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T2200Z",
+      "issuedAt": "2025-07-03T22:00:00Z",
+      "dataAsOf": "2025-07-03T22:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T22:00:00Z",
+      "targetEnd": "2025-07-03T23:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 0.5,
+        "observedAt": "2025-07-03T23:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T23:23:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t22z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T23:23:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250703T2300Z",
+      "issuedAt": "2025-07-03T23:00:00Z",
+      "dataAsOf": "2025-07-03T23:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-03T23:00:00Z",
+      "targetEnd": "2025-07-04T00:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 1,
+        "observedAt": "2025-07-04T00:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-03T23:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250703/conus/hrrr.t23z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-03T23:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0000Z",
+      "issuedAt": "2025-07-04T00:00:00Z",
+      "dataAsOf": "2025-07-04T00:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T00:00:00Z",
+      "targetEnd": "2025-07-04T01:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 0.5,
+        "observedAt": "2025-07-04T01:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T00:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t00z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T00:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0100Z",
+      "issuedAt": "2025-07-04T01:00:00Z",
+      "dataAsOf": "2025-07-04T01:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T01:00:00Z",
+      "targetEnd": "2025-07-04T02:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T02:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T01:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t01z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T01:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0200Z",
+      "issuedAt": "2025-07-04T02:00:00Z",
+      "dataAsOf": "2025-07-04T02:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T02:00:00Z",
+      "targetEnd": "2025-07-04T03:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T03:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T02:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t02z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T02:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0300Z",
+      "issuedAt": "2025-07-04T03:00:00Z",
+      "dataAsOf": "2025-07-04T03:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T03:00:00Z",
+      "targetEnd": "2025-07-04T04:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T04:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T03:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t03z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T03:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0400Z",
+      "issuedAt": "2025-07-04T04:00:00Z",
+      "dataAsOf": "2025-07-04T04:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T04:00:00Z",
+      "targetEnd": "2025-07-04T05:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T05:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T04:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t04z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T04:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0500Z",
+      "issuedAt": "2025-07-04T05:00:00Z",
+      "dataAsOf": "2025-07-04T05:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T05:00:00Z",
+      "targetEnd": "2025-07-04T06:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T06:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T05:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t05z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T05:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0600Z",
+      "issuedAt": "2025-07-04T06:00:00Z",
+      "dataAsOf": "2025-07-04T06:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T06:00:00Z",
+      "targetEnd": "2025-07-04T07:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T07:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T06:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t06z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T06:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0700Z",
+      "issuedAt": "2025-07-04T07:00:00Z",
+      "dataAsOf": "2025-07-04T07:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T07:00:00Z",
+      "targetEnd": "2025-07-04T08:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T08:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T07:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t07z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T07:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0800Z",
+      "issuedAt": "2025-07-04T08:00:00Z",
+      "dataAsOf": "2025-07-04T08:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T08:00:00Z",
+      "targetEnd": "2025-07-04T09:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T09:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T08:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t08z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T08:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T0900Z",
+      "issuedAt": "2025-07-04T09:00:00Z",
+      "dataAsOf": "2025-07-04T09:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T09:00:00Z",
+      "targetEnd": "2025-07-04T10:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T10:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T09:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t09z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T09:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1000Z",
+      "issuedAt": "2025-07-04T10:00:00Z",
+      "dataAsOf": "2025-07-04T10:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T10:00:00Z",
+      "targetEnd": "2025-07-04T11:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T11:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T10:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t10z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T10:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1100Z",
+      "issuedAt": "2025-07-04T11:00:00Z",
+      "dataAsOf": "2025-07-04T11:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T11:00:00Z",
+      "targetEnd": "2025-07-04T12:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T12:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T11:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t11z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T11:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1200Z",
+      "issuedAt": "2025-07-04T12:00:00Z",
+      "dataAsOf": "2025-07-04T12:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T12:00:00Z",
+      "targetEnd": "2025-07-04T13:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T13:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T12:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t12z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T12:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1300Z",
+      "issuedAt": "2025-07-04T13:00:00Z",
+      "dataAsOf": "2025-07-04T13:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T13:00:00Z",
+      "targetEnd": "2025-07-04T14:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T14:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T13:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t13z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T13:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1400Z",
+      "issuedAt": "2025-07-04T14:00:00Z",
+      "dataAsOf": "2025-07-04T14:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T14:00:00Z",
+      "targetEnd": "2025-07-04T15:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T15:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T14:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t14z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T14:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1500Z",
+      "issuedAt": "2025-07-04T15:00:00Z",
+      "dataAsOf": "2025-07-04T15:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T15:00:00Z",
+      "targetEnd": "2025-07-04T16:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T16:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T15:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t15z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T15:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1600Z",
+      "issuedAt": "2025-07-04T16:00:00Z",
+      "dataAsOf": "2025-07-04T16:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T16:00:00Z",
+      "targetEnd": "2025-07-04T17:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T17:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T16:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t16z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T16:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1700Z",
+      "issuedAt": "2025-07-04T17:00:00Z",
+      "dataAsOf": "2025-07-04T17:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T17:00:00Z",
+      "targetEnd": "2025-07-04T18:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-04T18:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T17:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t17z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T17:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1800Z",
+      "issuedAt": "2025-07-04T18:00:00Z",
+      "dataAsOf": "2025-07-04T18:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T18:00:00Z",
+      "targetEnd": "2025-07-04T19:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 28.7,
+        "observedAt": "2025-07-04T19:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T19:22:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t18z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T19:22:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T1900Z",
+      "issuedAt": "2025-07-04T19:00:00Z",
+      "dataAsOf": "2025-07-04T19:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T19:00:00Z",
+      "targetEnd": "2025-07-04T20:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 0.2,
+        "observedAt": "2025-07-04T20:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T20:17:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t19z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T20:17:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T2000Z",
+      "issuedAt": "2025-07-04T20:00:00Z",
+      "dataAsOf": "2025-07-04T20:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T20:00:00Z",
+      "targetEnd": "2025-07-04T21:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 0.7,
+        "observedAt": "2025-07-04T21:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T21:28:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t20z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T21:28:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T2100Z",
+      "issuedAt": "2025-07-04T21:00:00Z",
+      "dataAsOf": "2025-07-04T21:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T21:00:00Z",
+      "targetEnd": "2025-07-04T22:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 1.3,
+        "observedAt": "2025-07-04T22:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T21:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t21z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T21:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T2200Z",
+      "issuedAt": "2025-07-04T22:00:00Z",
+      "dataAsOf": "2025-07-04T22:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T22:00:00Z",
+      "targetEnd": "2025-07-04T23:00:00Z",
+      "target": {
+        "rainObserved": true,
+        "precipitationMm": 0.8,
+        "observedAt": "2025-07-04T23:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T22:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t22z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T22:53:00Z"
+      }
+    },
+    {
+      "predictionId": "hrrr-kmlb-20250704T2300Z",
+      "issuedAt": "2025-07-04T23:00:00Z",
+      "dataAsOf": "2025-07-04T23:00:00Z",
+      "location": {
+        "latitude": 28.0836,
+        "longitude": -80.6081
+      },
+      "targetStart": "2025-07-04T23:00:00Z",
+      "targetEnd": "2025-07-05T00:00:00Z",
+      "target": {
+        "rainObserved": false,
+        "precipitationMm": 0,
+        "observedAt": "2025-07-05T00:00:00Z",
+        "sourceId": "NCEI-GHCNh-72204012838-2025-07-04T23:53:00Z"
+      },
+      "features": {
+        "nwsProbabilityPercent": null,
+        "hrrrPrecipitationMm": 0
+      },
+      "baselines": {
+        "nws": null,
+        "hrrr": 5,
+        "equalWeightEnsemble": null
+      },
+      "provenance": {
+        "forecastSourceIds": [
+          "https://noaa-hrrr-bdp-pds.s3.amazonaws.com/hrrr.20250704/conus/hrrr.t23z.wrfsfcf01.grib2"
+        ],
+        "outcomeSourceId": "NCEI-GHCNh-72204012838-2025-07-04T23:53:00Z"
+      }
+    }
+  ]
+}

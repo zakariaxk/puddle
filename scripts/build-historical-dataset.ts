@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { dirname } from "node:path";
 
 import { buildHistoricalDataset, type HistoricalDatasetInput } from "../lib/historical-dataset.ts";
 
@@ -10,5 +11,6 @@ if (!inputPath || !outputPath || !generatedAt) {
 
 const input = JSON.parse(await readFile(inputPath, "utf8")) as HistoricalDatasetInput;
 const dataset = buildHistoricalDataset(input, generatedAt);
+await mkdir(dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(dataset, null, 2)}\n`);
 console.log(`Wrote ${dataset.metadata.rowCount} rows to ${outputPath}.`);

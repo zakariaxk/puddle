@@ -4,11 +4,12 @@ import { dirname } from "node:path";
 import type { HistoricalDataset } from "../lib/historical-dataset.ts";
 import { trainPuddleModel } from "../lib/ml.ts";
 
-const [inputPath, outputPath, trainedAt, version = "puddle-logistic-v1"] = process.argv.slice(2);
+const [inputPath, outputPath, trainedAt, version = "puddle-logistic-v1", featureName = "nwsProbabilityPercent"] = process.argv.slice(2);
 if (!inputPath || !outputPath || !trainedAt) throw new Error("Usage: npm run model:train -- <dataset.json> <model.json> <trained-at-iso> [version]");
+if (featureName !== "nwsProbabilityPercent" && featureName !== "hrrrPrecipitationMm") throw new Error("Model feature must be nwsProbabilityPercent or hrrrPrecipitationMm.");
 
 const dataset = JSON.parse(await readFile(inputPath, "utf8")) as HistoricalDataset;
-const result = trainPuddleModel(dataset, trainedAt, version);
+const result = trainPuddleModel(dataset, trainedAt, version, [featureName]);
 if (!result.artifact) throw new Error(`${result.reason} Training rows: ${result.trainingRows}; validation rows: ${result.validationRows}. No production model artifact was written.`);
 await mkdir(dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(result.artifact, null, 2)}\n`);

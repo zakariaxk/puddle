@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "phase-9-v1",
+  "version": "puddle-hrrr-logistic-candidate-v1",
+  "trainedAt": "2026-08-20T00:00:00.000Z",
+  "trainingData": {
+    "schemaVersion": "phase-8-v1",
+    "rowCount": 72,
+    "firstIssuedAt": "2025-07-02T00:00:00Z",
+    "lastIssuedAt": "2025-07-04T08:00:00Z"
+  },
+  "featureNames": [
+    "hrrrPrecipitationMm"
+  ],
+  "normalization": {
+    "means": [
+      0
+    ],
+    "standardDeviations": [
+      1
+    ]
+  },
+  "logisticRegression": {
+    "intercept": -1.9661103520900092,
+    "coefficients": [
+      0
+    ]
+  },
+  "calibration": {
+    "method": "platt",
+    "intercept": -1.0822895975133948,
+    "coefficient": -0.13291304956432096
+  },
+  "validation": {
+    "rowCount": 15,
+    "positiveCount": 5,
+    "brierScore": 0.2291666666639039,
+    "baselineBrierScore": 0.30250000000000005,
+    "selected": true
+  }
+}

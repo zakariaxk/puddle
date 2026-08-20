@@ -3,6 +3,8 @@ import type { WeatherSnapshot } from "./weather/types";
 
 export const puddleModelSchemaVersion = "phase-9-v1";
 export const puddleModelFeatureNames = ["nwsProbabilityPercent"] as const;
+export const candidateHrrrFeatureNames = ["hrrrPrecipitationMm"] as const;
+export type PuddleModelFeatureName = typeof puddleModelFeatureNames[number] | typeof candidateHrrrFeatureNames[number];
 const minimumTrainingRows = 40;
 const minimumValidationRows = 12;
 
@@ -11,16 +13,16 @@ export type PuddleModelArtifact = {
   version: string;
   trainedAt: string;
   trainingData: { schemaVersion: string; rowCount: number; firstIssuedAt: string; lastIssuedAt: string };
-  featureNames: typeof puddleModelFeatureNames;
+  featureNames: PuddleModelFeatureName[];
   normalization: { means: number[]; standardDeviations: number[] };
   logisticRegression: { intercept: number; coefficients: number[] };
   calibration: { method: "platt"; intercept: number; coefficient: number };
-  validation: { rowCount: number; positiveCount: number; brierScore: number; nwsBrierScore: number; selected: boolean };
+  validation: { rowCount: number; positiveCount: number; brierScore: number; baselineBrierScore: number; selected: boolean };
 };
 
 export type TrainingResult = { artifact: PuddleModelArtifact | null; reason: string; trainingRows: number; validationRows: number };
 
-type TrainingExample = { issuedAt: string; values: number[]; target: number; nwsProbabilityPercent: number };
+type TrainingExample = { issuedAt: string; values: number[]; target: number; baselineProbabilityPercent: number };
 
 function clampProbability(value: number) {
   return Math.max(0, Math.min(1, value));
@@ -36,20 +38,22 @@ function brierScore(probabilities: number[], targets: number[]) {
   return probabilities.reduce((total, probability, index) => total + (probability - targets[index]) ** 2, 0) / probabilities.length;
 }
 
-function numberFeature(row: HistoricalDatasetRow, name: typeof puddleModelFeatureNames[number]) {
+function numberFeature(row: HistoricalDatasetRow, name: PuddleModelFeatureName) {
   const value = row.features[name];
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
-function asTrainingExample(row: HistoricalDatasetRow): TrainingExample | null {
+function asTrainingExample(row: HistoricalDatasetRow, featureNames: readonly PuddleModelFeatureName[]): TrainingExample | null {
   if (!row.target || Date.parse(row.dataAsOf) > Date.parse(row.issuedAt) || Date.parse(row.issuedAt) > Date.parse(row.targetStart)) return null;
-  const values = puddleModelFeatureNames.map((name) => numberFeature(row, name));
+  const values = featureNames.map((name) => numberFeature(row, name));
   if (values.some((value) => value === null)) return null;
-  return { issuedAt: row.issuedAt, values: values as number[], target: row.target.rainObserved ? 1 : 0, nwsProbabilityPercent: values[0] as number };
+  const baseline = featureNames[0] === "nwsProbabilityPercent" ? values[0] as number : row.baselines.hrrr;
+  if (baseline === null) return null;
+  return { issuedAt: row.issuedAt, values: values as number[], target: row.target.rainObserved ? 1 : 0, baselineProbabilityPercent: baseline };
 }
 
-function meansAndStandardDeviations(rows: TrainingExample[]) {
-  const means = puddleModelFeatureNames.map((_, index) => rows.reduce((total, row) => total + row.values[index], 0) / rows.length);
+function meansAndStandardDeviations(rows: TrainingExample[], featureNames: readonly PuddleModelFeatureName[]) {
+  const means = featureNames.map((_, index) => rows.reduce((total, row) => total + row.values[index], 0) / rows.length);
   const standardDeviations = means.map((mean, index) => Math.sqrt(rows.reduce((total, row) => total + (row.values[index] - mean) ** 2, 0) / rows.length) || 1);
   return { means, standardDeviations };
 }
@@ -58,9 +62,9 @@ function normalized(values: number[], normalization: PuddleModelArtifact["normal
   return values.map((value, index) => (value - normalization.means[index]) / normalization.standardDeviations[index]);
 }
 
-function fitLogistic(rows: TrainingExample[], normalization: PuddleModelArtifact["normalization"], targetForRow: (row: TrainingExample) => number) {
+function fitLogistic(rows: TrainingExample[], normalization: PuddleModelArtifact["normalization"], featureCount: number, targetForRow: (row: TrainingExample) => number) {
   let intercept = 0;
-  const coefficients = puddleModelFeatureNames.map(() => 0);
+  const coefficients = Array.from({ length: featureCount }, () => 0);
   const rate = 0.08;
   for (let iteration = 0; iteration < 1_500; iteration += 1) {
     let interceptGradient = 0;
@@ -83,15 +87,16 @@ function rawProbability(values: number[], artifact: Pick<PuddleModelArtifact, "n
   return sigmoid(artifact.logisticRegression.intercept + normalizedValues.reduce((total, value, index) => total + value * artifact.logisticRegression.coefficients[index], 0));
 }
 
-export function calibratedProbability(values: number[], artifact: Pick<PuddleModelArtifact, "normalization" | "logisticRegression" | "calibration">) {
-  if (values.length !== puddleModelFeatureNames.length || values.some((value) => !Number.isFinite(value))) return null;
+export function calibratedProbability(values: number[], artifact: Pick<PuddleModelArtifact, "featureNames" | "normalization" | "logisticRegression" | "calibration">) {
+  if (values.length !== artifact.featureNames.length || values.some((value) => !Number.isFinite(value))) return null;
   const raw = rawProbability(values, artifact);
   return clampProbability(sigmoid(artifact.calibration.intercept + artifact.calibration.coefficient * raw));
 }
 
-export function trainPuddleModel(dataset: HistoricalDataset, trainedAt: string, version = "puddle-logistic-v1"): TrainingResult {
+export function trainPuddleModel(dataset: HistoricalDataset, trainedAt: string, version = "puddle-logistic-v1", featureNames: readonly PuddleModelFeatureName[] = puddleModelFeatureNames): TrainingResult {
   if (dataset.metadata.schemaVersion !== "phase-8-v1") return { artifact: null, reason: "The dataset schema is not supported by this trainer.", trainingRows: 0, validationRows: 0 };
-  const examples = dataset.rows.map(asTrainingExample).filter((row): row is TrainingExample => row !== null).sort((first, second) => Date.parse(first.issuedAt) - Date.parse(second.issuedAt));
+  if (featureNames.length !== 1 || !featureNames.every((name) => name === "nwsProbabilityPercent" || name === "hrrrPrecipitationMm")) return { artifact: null, reason: "The requested feature contract is not supported.", trainingRows: 0, validationRows: 0 };
+  const examples = dataset.rows.map((row) => asTrainingExample(row, featureNames)).filter((row): row is TrainingExample => row !== null).sort((first, second) => Date.parse(first.issuedAt) - Date.parse(second.issuedAt));
   const validationRows = Math.max(minimumValidationRows, Math.ceil(examples.length * 0.2));
   const trainingRows = examples.length - validationRows;
   if (trainingRows < minimumTrainingRows || validationRows < minimumValidationRows) {
@@ -99,30 +104,32 @@ export function trainPuddleModel(dataset: HistoricalDataset, trainedAt: string, 
   }
   const train = examples.slice(0, trainingRows);
   const validation = examples.slice(trainingRows);
-  const normalization = meansAndStandardDeviations(train);
-  const logisticRegression = fitLogistic(train, normalization, (row) => row.target);
+  const normalization = meansAndStandardDeviations(train, featureNames);
+  const logisticRegression = fitLogistic(train, normalization, featureNames.length, (row) => row.target);
   const provisional = { normalization, logisticRegression };
   const calibrationRows = train.slice(Math.floor(train.length * 0.8));
   const calibrationInputs = calibrationRows.map((row) => ({ ...row, values: [rawProbability(row.values, provisional)] }));
-  const calibration = fitLogistic(calibrationInputs, { means: [0], standardDeviations: [1] }, (row) => row.target);
+  const calibration = fitLogistic(calibrationInputs, { means: [0], standardDeviations: [1] }, 1, (row) => row.target);
   const artifact: PuddleModelArtifact = {
     schemaVersion: puddleModelSchemaVersion, version, trainedAt,
     trainingData: { schemaVersion: dataset.metadata.schemaVersion, rowCount: examples.length, firstIssuedAt: train[0].issuedAt, lastIssuedAt: train.at(-1)!.issuedAt },
-    featureNames: puddleModelFeatureNames, normalization, logisticRegression,
+    featureNames: [...featureNames], normalization, logisticRegression,
     calibration: { method: "platt", intercept: calibration.intercept, coefficient: calibration.coefficients[0] },
-    validation: { rowCount: validation.length, positiveCount: validation.filter((row) => row.target === 1).length, brierScore: 0, nwsBrierScore: 0, selected: false },
+    validation: { rowCount: validation.length, positiveCount: validation.filter((row) => row.target === 1).length, brierScore: 0, baselineBrierScore: 0, selected: false },
   };
   const modelProbabilities = validation.map((row) => calibratedProbability(row.values, artifact)!);
   const targets = validation.map((row) => row.target);
   artifact.validation.brierScore = brierScore(modelProbabilities, targets);
-  artifact.validation.nwsBrierScore = brierScore(validation.map((row) => clampProbability(row.nwsProbabilityPercent / 100)), targets);
+  artifact.validation.baselineBrierScore = brierScore(validation.map((row) => clampProbability(row.baselineProbabilityPercent / 100)), targets);
   artifact.validation.selected = artifact.validation.positiveCount > 0
     && artifact.validation.positiveCount < validation.length
-    && artifact.validation.brierScore < artifact.validation.nwsBrierScore;
-  return { artifact: artifact.validation.selected ? artifact : null, reason: artifact.validation.selected ? "Selected: calibrated logistic regression improves held-out Brier score over archived NWS guidance." : "Not selected: the candidate did not improve the held-out Brier score or validation contains one class.", trainingRows, validationRows };
+    && artifact.validation.brierScore < artifact.validation.baselineBrierScore;
+  const baselineName = featureNames[0] === "nwsProbabilityPercent" ? "archived NWS guidance" : "the archived HRRR reference";
+  return { artifact: artifact.validation.selected ? artifact : null, reason: artifact.validation.selected ? `Selected: calibrated logistic regression improves held-out Brier score over ${baselineName}.` : "Not selected: the candidate did not improve the held-out Brier score or validation contains one class.", trainingRows, validationRows };
 }
 
-export function extractLiveModelFeatures(snapshot: WeatherSnapshot, now = Date.now()) {
+export function extractLiveModelFeatures(snapshot: WeatherSnapshot, featureNames: readonly PuddleModelFeatureName[], now = Date.now()) {
+  if (featureNames.length !== 1 || featureNames[0] !== "nwsProbabilityPercent") return null;
   const periods = snapshot.model?.precipitation ?? [];
   const end = now + 60 * 60_000;
   let coveredMilliseconds = 0;
@@ -143,8 +150,8 @@ export function validatePuddleModelArtifact(value: unknown): value is PuddleMode
   return artifact.schemaVersion === puddleModelSchemaVersion
     && typeof artifact.version === "string"
     && Array.isArray(artifact.featureNames)
-    && artifact.featureNames.length === puddleModelFeatureNames.length
-    && artifact.featureNames.every((name, index) => name === puddleModelFeatureNames[index])
+    && artifact.featureNames.length === 1
+    && artifact.featureNames.every((name) => name === "nwsProbabilityPercent" || name === "hrrrPrecipitationMm")
     && Boolean(artifact.validation?.selected)
     && Boolean(artifact.normalization?.means?.every(Number.isFinite))
     && Boolean(artifact.normalization?.standardDeviations?.every((value) => Number.isFinite(value) && value > 0))

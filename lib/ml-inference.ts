@@ -4,7 +4,7 @@ import type { WeatherSnapshot } from "./weather/types";
 
 export function applyPuddleModel(forecast: ConsumerForecast, snapshot: WeatherSnapshot, artifact: PuddleModelArtifact, now = Date.now()): ConsumerForecast {
   if (forecast.status === "unavailable") return forecast;
-  const features = extractLiveModelFeatures(snapshot, now);
+  const features = extractLiveModelFeatures(snapshot, artifact.featureNames, now);
   const probability = features ? calibratedProbability(features, artifact) : null;
   if (probability === null) return forecast;
   const probabilityPercent = Math.round(probability * 100);
