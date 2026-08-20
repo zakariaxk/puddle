@@ -2,6 +2,17 @@
 
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import {
+  IconBeach,
+  IconBookmarkPlus,
+  IconHeart,
+  IconHome,
+  IconMapPin,
+  IconMenu2,
+  IconSearch,
+  IconSoccerField,
+  IconX,
+} from "@tabler/icons-react";
 import type { ConsumerForecast } from "@/lib/forecast";
 import type { GeocodingResult, LocationSelection } from "@/lib/location";
 import type { RadarSnapshot } from "@/lib/radar";
@@ -31,8 +42,10 @@ export function PuddleShell() {
   const [forecastError, setForecastError] = useState<string | null>(null);
   const [forecastChange, setForecastChange] = useState<string | null>(null);
   const previousHourProbability = useRef<number | null>(null);
+  const searchInput = useRef<HTMLInputElement>(null);
   const [isForecastLoading, setIsForecastLoading] = useState(false);
   const [savedLocations, setSavedLocations] = useState<SavedLocation[]>(defaultSavedLocations);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -48,6 +61,17 @@ export function PuddleShell() {
     const next = [...savedLocations, { ...selection, id: crypto.randomUUID() }];
     setSavedLocations(next);
     try { window.localStorage.setItem(savedLocationsKey, JSON.stringify(next)); } catch { /* Saving a place is optional. */ }
+  }
+
+  function focusSearch() {
+    setIsMenuOpen(false);
+    searchInput.current?.focus();
+    searchInput.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function scrollToSavedPlaces() {
+    setIsMenuOpen(false);
+    document.getElementById("saved-places")?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   function removeSavedLocation(id: string) {
@@ -174,9 +198,10 @@ export function PuddleShell() {
         <p className="topbar-promise">Know before you go.</p>
         <nav className="topbar-actions" aria-label="Primary navigation">
           <button className="quiet-button" type="button" onClick={() => setWhyOpen(true)}>How Puddle works</button>
-          <button className="saved-link" type="button" onClick={() => document.getElementById("saved-places")?.scrollIntoView({ behavior: "smooth" })}>Saved places <span aria-hidden="true">♡</span></button>
-          <button className="menu-button" type="button" aria-label="Open menu"><span /><span /><span /></button>
+          <button className="saved-link" type="button" onClick={scrollToSavedPlaces}><IconHeart aria-hidden="true" size={18} stroke={1.8} /> Saved places</button>
+          <button className="menu-button" type="button" aria-label={isMenuOpen ? "Close menu" : "Open menu"} aria-expanded={isMenuOpen} aria-controls="main-menu" onClick={() => setIsMenuOpen((open) => !open)}>{isMenuOpen ? <IconX aria-hidden="true" size={22} stroke={2} /> : <IconMenu2 aria-hidden="true" size={22} stroke={2} />}</button>
         </nav>
+        {isMenuOpen ? <div className="main-menu" id="main-menu"><button type="button" onClick={focusSearch}><IconSearch aria-hidden="true" size={18} />Find a place</button><button type="button" onClick={scrollToSavedPlaces}><IconHeart aria-hidden="true" size={18} />Saved places</button><button type="button" onClick={() => { setIsMenuOpen(false); setWhyOpen(true); document.getElementById("why-panel")?.scrollIntoView({ behavior: "smooth", block: "center" }); }}>How Puddle works</button></div> : null}
       </header>
 
       <section className="weather-stage" aria-label="Puddle forecast shell">
@@ -190,12 +215,13 @@ export function PuddleShell() {
               <label className="sr-only" htmlFor="place-search">Search for a Central Florida place</label>
               <input
                 id="place-search"
+                ref={searchInput}
                 name="place"
                 type="search"
                 placeholder="Search a place or address"
                 autoComplete="off"
               />
-              <button type="submit" aria-label={isSearching ? "Searching" : "Search"} disabled={isSearching}><span aria-hidden="true">⌕</span></button>
+              <button type="submit" aria-label={isSearching ? "Searching" : "Search"} disabled={isSearching}><IconSearch aria-hidden="true" size={21} stroke={2} /></button>
             </form>
             <p className="search-status" aria-live="polite">{searchMessage}</p>
             {searchResults.length ? (
@@ -210,8 +236,8 @@ export function PuddleShell() {
                 ))}
               </ul>
             ) : null}
-            {savedLocations.length ? <div className="saved-locations" id="saved-places" aria-label="Saved places"><ul>{savedLocations.map((location) => <li key={location.id}><button type="button" aria-label={`${location.id === "home" ? "Home" : location.id === "soccer" ? "Soccer" : "Beach"} saved place`} onClick={() => selectLocation(location)}><span className="saved-icon" aria-hidden="true">{location.id === "home" ? "⌂" : location.id === "soccer" ? "◉" : "♨"}</span><span><strong>{location.id === "home" ? "Home" : location.id === "soccer" ? "Soccer" : "Beach"}</strong><small>{location.name}</small></span></button><button className="remove-saved" type="button" aria-label={`Remove ${location.id === "home" ? "Home" : location.id === "soccer" ? "Soccer" : "Beach"}`} onClick={() => removeSavedLocation(location.id)}>×</button></li>)}</ul><button className="add-place" type="button" aria-label="Add a saved place">+</button></div> : null}
-            {selection ? <div className="selected-location" aria-live="polite"><span className="location-pin" aria-hidden="true">⌖</span><span><strong>{selection.name.replace(", Florida", ", FL")}</strong><small>Updated just now</small></span><span className="sr-only">Selected location</span><button type="button" onClick={saveLocation} aria-label="Save this place">♡</button></div> : null}
+            {savedLocations.length ? <div className="saved-locations" id="saved-places" aria-label="Saved places"><div className="saved-places-heading"><span>Saved places</span><small>Tap to check rain</small></div><ul>{savedLocations.map((location) => <li key={location.id}><button type="button" aria-label={`${location.id === "home" ? "Home" : location.id === "soccer" ? "Sports" : "Beach"} saved place`} onClick={() => selectLocation(location)}><span className="saved-icon" aria-hidden="true">{location.id === "home" ? <IconHome size={18} stroke={2} /> : location.id === "soccer" ? <IconSoccerField size={18} stroke={2} /> : <IconBeach size={18} stroke={2} />}</span><span><strong>{location.id === "home" ? "Home" : location.id === "soccer" ? "Sports" : "Beach"}</strong><small>{location.name}</small></span></button><button className="remove-saved" type="button" aria-label={`Remove ${location.id === "home" ? "Home" : location.id === "soccer" ? "Sports" : "Beach"}`} onClick={() => removeSavedLocation(location.id)}><IconX aria-hidden="true" size={14} /></button></li>)}</ul><button className="add-place" type="button" onClick={selection ? saveLocation : focusSearch} aria-label={selection ? "Save current place" : "Find a place to save"}>{selection ? <IconBookmarkPlus aria-hidden="true" size={20} /> : <IconSearch aria-hidden="true" size={20} />}</button></div> : null}
+            {selection ? <div className="selected-location" aria-live="polite"><IconMapPin className="location-pin" aria-hidden="true" size={26} stroke={1.8} /><span><strong>{selection.name.replace(", Florida", ", FL")}</strong><small>Updated just now</small></span><span className="sr-only">Selected location</span><button type="button" onClick={saveLocation} aria-label="Save this place"><IconBookmarkPlus aria-hidden="true" size={21} /></button></div> : null}
           </div>
 
           {!selection ? <ForecastEmpty /> : isForecastLoading ? <ForecastLoading /> : forecast ? <ForecastRead forecast={forecast} change={forecastChange} /> : <ForecastError message={forecastError} onRetry={() => selection && void loadForecast(selection)} />}

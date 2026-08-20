@@ -60,6 +60,7 @@ export function LocationMap({ selection, probabilityPercent, onSelect, radar, no
   const [frameIndex, setFrameIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [projectionMinutes, setProjectionMinutes] = useState<15 | 30 | 60 | null>(null);
+  const [isMapReady, setIsMapReady] = useState(false);
   const frames = radar?.frames ?? [];
   const activeFrame = frames[frameIndex] ?? null;
 
@@ -94,7 +95,11 @@ export function LocationMap({ selection, probabilityPercent, onSelect, radar, no
       });
 
       map.addControl(new NavigationControl({ showCompass: false }), "top-right");
-      map.on("load", () => { applyRadarFrame(map, radarTileRef.current); applyProjection(map, null, null); });
+      map.on("load", () => {
+        applyRadarFrame(map, radarTileRef.current);
+        applyProjection(map, null, null);
+        setIsMapReady(true);
+      });
       map.on("click", (event) => {
         const latitude = event.lngLat.lat;
         const longitude = event.lngLat.lng;
@@ -113,6 +118,7 @@ export function LocationMap({ selection, probabilityPercent, onSelect, radar, no
       mapRef.current?.remove();
       markerRef.current = null;
       mapRef.current = null;
+      setIsMapReady(false);
     };
   }, []);
 
@@ -144,7 +150,7 @@ export function LocationMap({ selection, probabilityPercent, onSelect, radar, no
   }, [frames.length, isPlaying]);
 
   useEffect(() => {
-    if (!selection || !mapRef.current) return;
+    if (!selection || !mapRef.current || !isMapReady) return;
     let cancelled = false;
 
     void import("maplibre-gl").then(({ Marker }) => {
@@ -171,7 +177,7 @@ export function LocationMap({ selection, probabilityPercent, onSelect, radar, no
     });
 
     return () => { cancelled = true; };
-  }, [probabilityPercent, selection]);
+  }, [isMapReady, probabilityPercent, selection]);
 
   return (
     <div className="map-shell map-shell-live">

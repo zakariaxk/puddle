@@ -89,6 +89,7 @@ test("keeps the critical controls usable without horizontal overflow at 320px", 
   });
 
   await page.goto("/");
+  await page.getByRole("button", { name: "Open menu" }).click();
   await expect(page.getByRole("button", { name: "How Puddle works" })).toBeVisible();
   await page.getByRole("button", { name: "How Puddle works" }).press("Enter");
   await expect(page.getByText(/Puddle uses live National Weather Service/i)).toBeVisible();
