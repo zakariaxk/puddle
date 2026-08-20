@@ -59,7 +59,7 @@ test("serves the product shell and exposes its honest no-data states", async ({ 
   await expect(page.getByRole("link", { name: "Weather data by RainViewer" })).toBeVisible();
   await page.getByRole("button", { name: "Play recent radar" }).click();
   await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
-  await map.click({ position: { x: 170, y: 180 } });
+  await map.click({ position: { x: 350, y: 300 } });
   await expect(page.locator(".search-status")).toContainText(/Selected point \(/);
 });
 
