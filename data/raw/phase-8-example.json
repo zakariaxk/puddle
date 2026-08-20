@@ -1,0 +1,26 @@
+{
+  "snapshots": [
+    {
+      "id": "melbourne-20260820-1200",
+      "issuedAt": "2026-08-20T12:00:00.000Z",
+      "availableAt": "2026-08-20T11:59:00.000Z",
+      "location": { "latitude": 28.0836, "longitude": -80.6081 },
+      "nwsProbabilityPercent": 60,
+      "hrrrPrecipitationMm": 1.5,
+      "targetStart": "2026-08-20T12:00:00.000Z",
+      "targetEnd": "2026-08-20T13:00:00.000Z",
+      "features": { "radarDistanceKm": 4.2 },
+      "sourceIds": ["nws-20260820-1159", "hrrr-20260820-11"]
+    }
+  ],
+  "observations": [
+    {
+      "id": "KMLB-20260820-1230",
+      "observedAt": "2026-08-20T12:30:00.000Z",
+      "availableAt": "2026-08-20T12:35:00.000Z",
+      "location": { "latitude": 28.09, "longitude": -80.61 },
+      "precipitationMm": 0.2,
+      "sourceId": "nws-KMLB-1230"
+    }
+  ]
+}
