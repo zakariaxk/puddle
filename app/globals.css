@@ -43,9 +43,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, .map-canvas .maplibr
 .topbar-promise { color: var(--muted); font-size: .82rem; margin: 0; }
 .quiet-button { background: transparent; border: 0; color: var(--rain-deep); font-size: .85rem; font-weight: 650; justify-self: end; padding: 10px 0; }
 
-.app-intro { max-width: 650px; padding: clamp(50px, 9vw, 116px) 0 clamp(30px, 5vw, 64px); }
+.app-intro { max-width: 650px; padding: clamp(28px, 5vw, 58px) 0 clamp(26px, 3vw, 42px); }
 .section-label { color: var(--rain-deep); font-family: var(--font-geist-mono), monospace; font-size: .68rem; font-weight: 700; letter-spacing: .1em; margin: 0 0 13px; text-transform: uppercase; }
-.app-intro h1 { font-size: clamp(2.55rem, 5vw, 4.9rem); letter-spacing: -.075em; line-height: .96; margin: 0; max-width: 720px; }
+.app-intro h1 { font-size: clamp(2.55rem, 4.2vw, 4.15rem); letter-spacing: -.075em; line-height: .96; margin: 0; max-width: 650px; }
 .app-intro > p:last-child { color: var(--muted); font-size: clamp(1rem, 1.5vw, 1.16rem); line-height: 1.55; margin: 20px 0 0; max-width: 485px; }
 
 .weather-stage { display: grid; gap: clamp(18px, 3vw, 42px); grid-template-columns: minmax(290px, .82fr) minmax(0, 1.5fr); }
@@ -74,6 +74,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, .map-canvas .maplibr
 .forecast-read { border-bottom: 1px solid var(--line); padding: clamp(36px, 5vw, 58px) 0 28px; }
 .hero-probability { color: var(--rain-deep); font-size: clamp(5.3rem, 10vw, 8.4rem); font-variant-numeric: tabular-nums; font-weight: 760; letter-spacing: -.105em; line-height: .76; margin: 8px 0 18px -6px; }
 .hero-probability span { font-size: .36em; letter-spacing: -.06em; margin-left: .06em; vertical-align: 1.05em; }
+.forecast-dry-title { color: var(--rain-deep); font-size: clamp(2.25rem, 4vw, 3.2rem); font-weight: 760; letter-spacing: -.07em; line-height: .95; margin: 10px 0 12px; }.forecast-dry-detail { color: var(--muted); font-size: .94rem; line-height: 1.45; margin: 0; max-width: 330px; }
 .forecast-summary { color: var(--ink); font-size: .95rem; font-weight: 650; line-height: 1.45; margin: 0; }
 .forecast-details { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; margin: 26px 0 0; }.forecast-details div { border-top: 1px solid var(--line); padding-top: 10px; }.forecast-details dt { color: var(--muted); font-family: var(--font-geist-mono), monospace; font-size: .63rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }.forecast-details dd { font-size: .82rem; font-weight: 680; margin: 5px 0 0; }
 .forecast-degraded { background: color-mix(in srgb, var(--aqua) 38%, transparent); border-left: 2px solid var(--rain); color: var(--rain-deep); font-size: .75rem; line-height: 1.4; margin: 21px 0 0; padding: 8px 10px; }

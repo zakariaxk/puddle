@@ -247,9 +247,10 @@ function Mascot({ state }: { state: "resting" | "looking" | "concerned" }) {
 
 function ForecastRead({ forecast, change }: { forecast: ConsumerForecast; change: string | null }) {
   const hero = forecast.horizons.find((horizon) => horizon.minutes === 60)!;
+  const isDry = hero.probabilityPercent === 0 && hero.intensity === "none";
   return <>
     <div className="forecast-read" aria-live="polite">
-      <div><p className="section-label">Chance of measurable rain in the next hour</p><p className="hero-probability">{hero.probabilityPercent}<span>%</span></p><p className="forecast-summary">{hero.arrival ? `Most likely window: ${hero.arrival}` : "No meaningful rain window indicated."}</p></div>
+      <div><p className="section-label">Chance of measurable rain in the next hour</p>{isDry ? <><p className="forecast-dry-title">Dry for now</p><p className="forecast-dry-detail">NWS guidance shows a 0% chance of measurable rain here in the next hour.</p></> : <><p className="hero-probability">{hero.probabilityPercent}<span>%</span></p><p className="forecast-summary">{hero.arrival ? `Most likely window: ${hero.arrival}` : "No meaningful rain window indicated."}</p></>}</div>
       <dl className="forecast-details"><div><dt>Intensity</dt><dd>{hero.intensity === "none" ? "None indicated" : `${hero.intensity[0].toUpperCase()}${hero.intensity.slice(1)} rain`}</dd></div><div><dt>Confidence</dt><dd>{forecast.confidence[0].toUpperCase() + forecast.confidence.slice(1)}</dd></div></dl>
       {forecast.status === "degraded" ? <p className="forecast-degraded">Reduced confidence: some live inputs are unavailable or stale.</p> : null}
       {change ? <p className="forecast-change" aria-live="polite">{change}</p> : null}
