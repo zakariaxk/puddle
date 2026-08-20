@@ -7,6 +7,7 @@ import type { RadarNowcast } from "@/lib/nowcast";
 
 type LocationMapProps = {
   selection: LocationSelection | null;
+  probabilityPercent: number | null;
   onSelect: (location: LocationSelection) => void;
   radar: RadarSnapshot | null;
   nowcast: RadarNowcast | null;
@@ -49,10 +50,11 @@ function applyProjection(map: import("maplibre-gl").Map, nowcast: RadarNowcast |
   map.addLayer({ id: projectionLayerId, type: "circle", source: projectionSourceId, paint: { "circle-radius": ["get", "radius"], "circle-color": "#207d86", "circle-opacity": 0.18, "circle-stroke-color": "#0f555f", "circle-stroke-width": 2, "circle-stroke-opacity": 0.7 } });
 }
 
-export function LocationMap({ selection, onSelect, radar, nowcast, radarError, onRetryRadar }: LocationMapProps) {
+export function LocationMap({ selection, probabilityPercent, onSelect, radar, nowcast, radarError, onRetryRadar }: LocationMapProps) {
   const mapElement = useRef<HTMLDivElement>(null);
   const mapRef = useRef<import("maplibre-gl").Map | null>(null);
   const markerRef = useRef<import("maplibre-gl").Marker | null>(null);
+  const selectedCoordinatesRef = useRef<string | null>(null);
   const onSelectRef = useRef(onSelect);
   const radarTileRef = useRef<string | null>(null);
   const [frameIndex, setFrameIndex] = useState(0);
@@ -148,10 +150,14 @@ export function LocationMap({ selection, onSelect, radar, nowcast, radarError, o
     void import("maplibre-gl").then(({ Marker }) => {
       if (cancelled || !mapRef.current) return;
       const coordinates: [number, number] = [selection.longitude, selection.latitude];
+      const coordinatesKey = coordinates.join(",");
       const markerElement = markerRef.current?.getElement() ?? document.createElement("div");
       markerElement.className = "puddle-map-marker";
-      markerElement.setAttribute("aria-label", `Selected location: ${selection.name}`);
-      markerElement.innerHTML = '<span aria-hidden="true">P</span>';
+      markerElement.setAttribute("aria-label", `Selected location: ${selection.name}${probabilityPercent === null ? "" : `. ${probabilityPercent}% chance of measurable rain in the next hour.`}`);
+      const markerLabel = document.createElement("span");
+      markerLabel.setAttribute("aria-hidden", "true");
+      markerLabel.textContent = probabilityPercent === null ? "P" : `${probabilityPercent}%`;
+      markerElement.replaceChildren(markerLabel);
 
       if (!markerRef.current) {
         markerRef.current = new Marker({ element: markerElement, anchor: "bottom" }).setLngLat(coordinates).addTo(mapRef.current);
@@ -159,11 +165,15 @@ export function LocationMap({ selection, onSelect, radar, nowcast, radarError, o
         markerRef.current.setLngLat(coordinates);
       }
 
-      mapRef.current.flyTo({ center: coordinates, zoom: Math.max(mapRef.current.getZoom(), 12), essential: true, duration: 900 });
+      if (selectedCoordinatesRef.current !== coordinatesKey) {
+        selectedCoordinatesRef.current = coordinatesKey;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        mapRef.current.flyTo({ center: coordinates, zoom: Math.max(mapRef.current.getZoom(), 12), essential: !reduceMotion, duration: reduceMotion ? 0 : 900 });
+      }
     });
 
     return () => { cancelled = true; };
-  }, [selection]);
+  }, [probabilityPercent, selection]);
 
   return (
     <div className="map-shell map-shell-live">

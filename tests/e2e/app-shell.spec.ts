@@ -79,3 +79,17 @@ test("keeps radar still for reduced motion and recovers from a failed source", a
   await page.getByRole("button", { name: "Play recent radar" }).click();
   await expect(page.getByRole("button", { name: "Play recent radar" })).toBeVisible();
 });
+
+test("keeps the critical controls usable without horizontal overflow at 320px", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 720 });
+  await page.route("**/api/radar", async (route) => {
+    await route.fulfill({ contentType: "application/json", body: JSON.stringify(radarSnapshot) });
+  });
+
+  await page.goto("/");
+  await expect(page.getByRole("button", { name: "How Puddle works" })).toBeVisible();
+  await page.getByRole("button", { name: "How Puddle works" }).press("Enter");
+  await expect(page.getByText(/Puddle uses live National Weather Service/i)).toBeVisible();
+  expect(await page.locator("html").evaluate((element) => element.scrollWidth === element.clientWidth)).toBe(true);
+  await expect(page.getByLabel("Search for a Central Florida place")).toBeVisible();
+});

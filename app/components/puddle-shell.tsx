@@ -1,6 +1,7 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { ConsumerForecast } from "@/lib/forecast";
 import type { GeocodingResult, LocationSelection } from "@/lib/location";
 import type { RadarSnapshot } from "@/lib/radar";
@@ -23,6 +24,8 @@ export function PuddleShell() {
   const [nowcast, setNowcast] = useState<RadarNowcast | null>(null);
   const [forecast, setForecast] = useState<ConsumerForecast | null>(null);
   const [forecastError, setForecastError] = useState<string | null>(null);
+  const [forecastChange, setForecastChange] = useState<string | null>(null);
+  const previousHourProbability = useRef<number | null>(null);
   const [isForecastLoading, setIsForecastLoading] = useState(false);
   const [savedLocations, setSavedLocations] = useState<SavedLocation[]>([]);
 
@@ -90,6 +93,14 @@ export function PuddleShell() {
       const response = await fetch(`/api/forecast?latitude=${location.latitude}&longitude=${location.longitude}`);
       const body = await response.json() as ConsumerForecast & { error?: string };
       if (!response.ok) throw new Error(body.error);
+      const nextHour = body.horizons.find((horizon) => horizon.minutes === 60);
+      if (previousHourProbability.current !== null && nextHour && previousHourProbability.current !== nextHour.probabilityPercent) {
+        const direction = nextHour.probabilityPercent > previousHourProbability.current ? "higher" : "lower";
+        setForecastChange(`Next-hour rain chance is now ${nextHour.probabilityPercent}%, ${direction} than the previous update.`);
+      } else {
+        setForecastChange(null);
+      }
+      previousHourProbability.current = nextHour?.probabilityPercent ?? null;
       setForecast(body);
     } catch (error) {
       setForecast(null);
@@ -136,6 +147,8 @@ export function PuddleShell() {
   function selectLocation(location: LocationSelection) {
     setSelection(location);
     setForecast(null);
+    setForecastChange(null);
+    previousHourProbability.current = null;
     setSearchResults([]);
     setSearchMessage(`${location.name} is selected.`);
   }
@@ -144,7 +157,7 @@ export function PuddleShell() {
     <main className="puddle-app">
       <header className="topbar">
         <a className="brand" href="#forecast" aria-label="Puddle home">
-          <span className="brand-mark" aria-hidden="true">P</span>
+          <span className="brand-mark" aria-hidden="true"><Image src="/mascot/puddle-mascot-refined.png" alt="" width={28} height={28} priority /></span>
           <span>Puddle</span>
         </a>
         <p className="topbar-promise">Know before you go.</p>
@@ -191,7 +204,7 @@ export function PuddleShell() {
             {savedLocations.length ? <div className="saved-locations" aria-label="Saved places"><p>Saved places</p><ul>{savedLocations.map((location) => <li key={location.id}><button type="button" onClick={() => selectLocation(location)}>{location.name}</button><button type="button" aria-label={`Remove ${location.name}`} onClick={() => removeSavedLocation(location.id)}>Remove</button></li>)}</ul></div> : null}
           </div>
 
-          {!selection ? <ForecastEmpty /> : isForecastLoading ? <ForecastLoading /> : forecast ? <ForecastRead forecast={forecast} /> : <ForecastError message={forecastError} onRetry={() => selection && void loadForecast(selection)} />}
+          {!selection ? <ForecastEmpty /> : isForecastLoading ? <ForecastLoading /> : forecast ? <ForecastRead forecast={forecast} change={forecastChange} /> : <ForecastError message={forecastError} onRetry={() => selection && void loadForecast(selection)} />}
 
           <button
             className="why-button"
@@ -210,31 +223,36 @@ export function PuddleShell() {
           ) : null}
         </div>
 
-        <LocationMap selection={selection} onSelect={selectLocation} radar={radar} nowcast={nowcast} radarError={radarError} onRetryRadar={() => { void loadRadar(); void loadNowcast(); }} />
+        <LocationMap selection={selection} probabilityPercent={forecast?.horizons.find((horizon) => horizon.minutes === 60)?.probabilityPercent ?? null} onSelect={selectLocation} radar={radar} nowcast={nowcast} radarError={radarError} onRetryRadar={() => { void loadRadar(); void loadNowcast(); }} />
       </section>
     </main>
   );
 }
 
 function ForecastEmpty() {
-  return <div className="forecast-unavailable" aria-labelledby="forecast-title"><div className="forecast-copy"><p className="section-label">Next hour</p><h2 id="forecast-title">Waiting on your location</h2><p>Rain probability, timing, and confidence appear here after a place is selected.</p></div><div className="forecast-placeholder" aria-label="Forecast loading placeholder"><span /><span /><span /></div></div>;
+  return <div className="forecast-unavailable" aria-labelledby="forecast-title"><Mascot state="resting" /><div className="forecast-copy"><p className="section-label">Next hour</p><h2 id="forecast-title">Waiting on your location</h2><p>Rain probability, timing, and confidence appear here after a place is selected.</p></div></div>;
 }
 
 function ForecastLoading() {
-  return <div className="forecast-unavailable" aria-live="polite"><div className="forecast-copy"><p className="section-label">Next hour</p><h2>Reading live guidance</h2><p>Puddle is checking the latest National Weather Service forecast for this point.</p></div><div className="forecast-placeholder" aria-label="Loading forecast"><span /><span /><span /></div></div>;
+  return <div className="forecast-unavailable" aria-live="polite"><Mascot state="looking" /><div className="forecast-copy"><p className="section-label">Next hour</p><h2>Reading live guidance</h2><p>Puddle is checking the latest National Weather Service forecast for this point.</p></div><div className="forecast-placeholder" aria-label="Loading forecast"><span /><span /><span /></div></div>;
 }
 
 function ForecastError({ message, onRetry }: { message: string | null; onRetry: () => void }) {
-  return <div className="forecast-unavailable forecast-error" role="status"><div className="forecast-copy"><p className="section-label">Next hour</p><h2>Forecast temporarily unavailable</h2><p>{message ?? "Puddle could not load live forecast guidance."}</p><button type="button" className="retry-button" onClick={onRetry}>Try again</button></div></div>;
+  return <div className="forecast-unavailable forecast-error" role="status"><Mascot state="concerned" /><div className="forecast-copy"><p className="section-label">Next hour</p><h2>Forecast temporarily unavailable</h2><p>{message ?? "Puddle could not load live forecast guidance."}</p><button type="button" className="retry-button" onClick={onRetry}>Try again</button></div></div>;
 }
 
-function ForecastRead({ forecast }: { forecast: ConsumerForecast }) {
+function Mascot({ state }: { state: "resting" | "looking" | "concerned" }) {
+  return <Image className={`forecast-mascot forecast-mascot-${state}`} src="/mascot/puddle-mascot-refined.png" alt="" width={384} height={384} priority={state === "resting"} />;
+}
+
+function ForecastRead({ forecast, change }: { forecast: ConsumerForecast; change: string | null }) {
   const hero = forecast.horizons.find((horizon) => horizon.minutes === 60)!;
   return <>
     <div className="forecast-read" aria-live="polite">
       <div><p className="section-label">Chance of measurable rain in the next hour</p><p className="hero-probability">{hero.probabilityPercent}<span>%</span></p><p className="forecast-summary">{hero.arrival ? `Most likely window: ${hero.arrival}` : "No meaningful rain window indicated."}</p></div>
       <dl className="forecast-details"><div><dt>Intensity</dt><dd>{hero.intensity === "none" ? "None indicated" : `${hero.intensity[0].toUpperCase()}${hero.intensity.slice(1)} rain`}</dd></div><div><dt>Confidence</dt><dd>{forecast.confidence[0].toUpperCase() + forecast.confidence.slice(1)}</dd></div></dl>
       {forecast.status === "degraded" ? <p className="forecast-degraded">Reduced confidence: some live inputs are unavailable or stale.</p> : null}
+      {change ? <p className="forecast-change" aria-live="polite">{change}</p> : null}
     </div>
     <div className="horizon-list" aria-label="Rain forecast horizons">
       {forecast.horizons.map((horizon) => <div className={`horizon ${horizon.minutes === 60 ? "horizon-active" : ""}`} key={horizon.minutes}><span>{horizonLabels[horizon.minutes]}</span><strong>{horizon.probabilityPercent}%</strong><i aria-hidden="true" style={{ width: `${Math.max(8, horizon.probabilityPercent)}%` }} /></div>)}
