@@ -51,6 +51,52 @@ Audit every completed phase against the applicable items below. A phase is not d
 - [ ] Calibration is measured.
 - [ ] Appropriate NWS, HRRR, and simple-ensemble baselines are used.
 
+## Production ML (Phase 13)
+
+### Live inference
+
+- [ ] Production can retrieve current HRRR features for a Central Florida coordinate.
+- [ ] Current feature definitions, units, windows, grid interpretation, and normalization match the training contract.
+- [ ] Every required promoted-model feature is available, valid, and fresh in production.
+- [ ] The live forecast API invokes the trained promoted model when its feature contract is satisfied.
+- [ ] Calibrated ML output drives the 1-hour hero forecast when inference succeeds.
+- [ ] The response identifies `puddle_ml` versus `provider_fallback` forecast origin.
+- [ ] Model version is returned and recorded for ML forecasts.
+
+### Training
+
+- [ ] The dataset is materially larger than the previous 57-row candidate and uses real historical data only.
+- [ ] Training data includes rain and non-rain examples across representative Central Florida conditions.
+- [ ] Validation is chronological, with both rain and non-rain held-out examples.
+- [ ] No training row contains timestamp leakage: every input was available at prediction time and its target was observed later.
+- [ ] The feature contract is identical between training and production inference.
+- [ ] The promoted artifact is reproducible and records feature metadata, calibration, time ranges, class counts, metrics, and baselines.
+
+### Evaluation
+
+- [ ] Brier score is measured for raw and calibrated Puddle probabilities.
+- [ ] Calibration is measured and recorded.
+- [ ] NWS, HRRR, and simple equal-weight ensemble baselines are measured on the same held-out data.
+- [ ] A model is promoted only after passing the documented feature-parity, leakage, validation, calibration, and baseline-improvement rule.
+- [ ] No unsupported accuracy claim is made.
+
+### Reliability
+
+- [ ] Required-source failure falls back cleanly to provider-derived guidance.
+- [ ] Missing, malformed, unpromoted, or incompatible artifacts fall back cleanly.
+- [ ] Stale required inputs never silently produce an ML forecast.
+- [ ] Fallback origin is clearly marked in the internal/API contract and never presented as Puddle ML.
+- [ ] The app remains functional without ML.
+
+### Production proof
+
+- [ ] A real current Central Florida location is tested end to end without mocks.
+- [ ] Current HRRR data is obtained and the feature vector is built against the promoted-model contract.
+- [ ] Inference executes and returns a calibrated probability through the real forecast API.
+- [ ] The UI renders the ML probability and subtle provenance.
+- [ ] The forecast is persisted with model version, forecast source, compact feature snapshot, and source timestamps.
+- [ ] A deliberately unavailable required ML source verifies the provider fallback API and UI path.
+
 ## Git
 
 - [ ] Commits are coherent and descriptively named.

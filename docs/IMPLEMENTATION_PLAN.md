@@ -417,3 +417,46 @@ Likely boundaries: deployment configuration; production-found fixes by coherent 
 
 ### Stop Condition
 Production is verified, limitations are reported, `main` matches `origin/main`, the worktree is clean, and no post-MVP phase is started.
+
+## Phase 13 — Production ML Forecast
+
+### Goal
+Make Puddle's live next-hour forecast use a real trained and calibrated ML model built from live-compatible meteorological features, with safe fallback when required inputs or a valid model are unavailable.
+
+### Scope
+Production-safe Central Florida HRRR next-hour precipitation ingestion; one shared training-and-inference feature contract; a materially expanded, leakage-safe historical dataset; chronological model validation and calibration; baseline comparison; explicit model promotion; live forecast API inference; compact provenance persistence; and consumer-friendly forecast-origin messaging.
+
+### Out of Scope
+Neural weather foundation models, transformers, GPU inference, distributed processing, queues, Kafka, Redis, new standalone services, Kubernetes, Docker, global atmospheric models, long-range forecasting, continuous retraining infrastructure, and complex MLOps platforms.
+
+### Deliverables
+A promoted, reproducible calibrated model artifact that uses only live-compatible features; efficient current HRRR feature retrieval without full-file downloads per request; a live forecast path that returns calibrated Puddle ML probability when all required inputs are fresh and valid; and a transparent provider-derived fallback whenever ML cannot safely run.
+
+### Requirements
+- Define exactly one feature schema with names, units, meaning, normalization, requiredness, and freshness rules used by both training and live inference.
+- Retrieve the newest usable HRRR run for a selected Central Florida coordinate and extract the same next-hour precipitation window used in training.
+- Prefer the smallest useful set of consistently available inputs: HRRR guidance, NWS guidance, supported radar features, nearby observations, and justified time/location features.
+- Expand the real historical dataset beyond the prior 57-row candidate with rain and non-rain examples across representative Central Florida conditions; reject rows with unavailable-as-of inputs or leakage.
+- Train simple candidates only: logistic regression and at most one lightweight tree-based model already compatible with the repository.
+- Validate chronologically, measure raw and calibrated probabilities, and compare Brier score against NWS, HRRR, equal-weight ensemble, and the previous candidate where meaningful.
+- Promote an artifact only after feature parity, leakage, calibration, validation, and baseline-improvement checks succeed. Never select an artifact merely because it is newest.
+- Preserve existing provider-derived forecasting for every ML failure mode, including missing, malformed, unpromoted, incompatible, or stale model inputs.
+- Return forecast origin and model version in the API, and persist compact feature/source-timestamp provenance for ML forecasts.
+
+### Tests
+Feature-contract parity, units, normalization, invalid/missing values, current-HRRR parsing and freshness, model loading/promotion rules, deterministic calibrated inference, probability bounds, metadata, provider fallback, persistence provenance, and end-to-end live plus deliberately degraded-source flows.
+
+### End-to-End Verification
+For Melbourne Beach and Austin Tindall Sports Complex, use real current sources to resolve the location, acquire HRRR/radar/observation/NWS inputs, validate the feature vector, run a promoted model, return the calibrated probability through the forecast API, render it in the UI, and verify persisted provenance. Then deliberately make one required ML source unavailable and verify a correctly marked provider fallback still renders.
+
+### UI/UX Verification
+Keep the primary screen focused on the next-hour probability. Show only subtle provenance in Why or sources (for example, Puddle forecast with a model version, or live weather guidance during fallback); do not expose raw feature vectors or add an ML dashboard.
+
+### Success Criteria
+All dedicated Production ML criteria in `docs/SUCCESS_CRITERIA.md` pass. The hero 1-hour probability is a calibrated promoted-model output during successful live inference, fallback remains honest and available, and real current Central Florida verification—not fixtures—proves the complete path.
+
+### Commit Plan
+Likely boundaries: documentation; live HRRR ingestion; shared feature contract; expanded training data and validated model; live inference and persistence; tests; and workflow documentation. Each independently working change is verified, committed, and pushed to `origin/main` before continuing.
+
+### Stop Condition
+Real current weather flows through fresh live features, a promoted calibrated model, the forecast API, and the consumer UI for Central Florida locations; persistence and fallback have both been verified. If no candidate honestly beats its baseline, do not promote it: retain provider fallback and report the data limitation instead.
