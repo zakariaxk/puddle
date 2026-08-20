@@ -21,7 +21,7 @@ describe("NWS weather provider", () => {
     expect(result.status).toBe("complete");
     expect(result.cache.status).toBe("miss");
     expect(result.observation).toMatchObject({ stationId: "KMLB", temperatureC: 29.4, observedAt: "2026-08-19T16:00:00.000Z" });
-    expect(result.model?.precipitation).toEqual([{ validFrom: "2026-08-19T16:00:00.000Z", validTo: "2026-08-19T17:00:00.000Z", quantitativePrecipitationMm: 1.7 }]);
+    expect(result.model?.precipitation).toEqual([{ validFrom: "2026-08-19T16:00:00.000Z", validTo: "2026-08-19T17:00:00.000Z", quantitativePrecipitationMm: 1.7, probabilityPercent: null }]);
     expect(result.health).toEqual(expect.arrayContaining([expect.objectContaining({ provider: "National Weather Service", kind: "observation", status: "available" }), expect.objectContaining({ dataset: "National Digital Forecast Database", kind: "model", status: "available" })]));
   });
 

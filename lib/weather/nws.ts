@@ -14,7 +14,8 @@ const cache = new Map<string, CacheEntry>();
 type NwsPoint = { properties?: { observationStations?: string; forecastGridData?: string } };
 type NwsStationList = { features?: Array<{ id?: string; properties?: { stationIdentifier?: string } }> };
 type NwsObservation = { geometry?: { coordinates?: unknown }; properties?: Record<string, unknown> };
-type NwsGrid = { properties?: { updateTime?: string; quantitativePrecipitation?: { values?: Array<{ validTime?: string; value?: number | null }> } } };
+type NwsGridValue = { validTime?: string; value?: number | null };
+type NwsGrid = { properties?: { updateTime?: string; quantitativePrecipitation?: { values?: NwsGridValue[] }; probabilityOfPrecipitation?: { values?: NwsGridValue[] } } };
 
 function cacheKey(latitude: number, longitude: number) {
   return `${latitude.toFixed(2)},${longitude.toFixed(2)}`;
@@ -40,10 +41,17 @@ function parseValidTime(validTime: string): { validFrom: string; validTo: string
 }
 
 function normalizePrecipitation(grid: NwsGrid): ModelPrecipitationPeriod[] {
+  const probabilities = new Map(
+    (grid.properties?.probabilityOfPrecipitation?.values ?? []).flatMap(({ validTime, value }) => {
+      if (!validTime) return [];
+      const period = parseValidTime(validTime);
+      return period ? [[`${period.validFrom}/${period.validTo}`, asNumber(value)] as const] : [];
+    }),
+  );
   return (grid.properties?.quantitativePrecipitation?.values ?? []).flatMap(({ validTime, value }) => {
     if (!validTime) return [];
     const period = parseValidTime(validTime);
-    return period ? [{ ...period, quantitativePrecipitationMm: asNumber(value) }] : [];
+    return period ? [{ ...period, quantitativePrecipitationMm: asNumber(value), probabilityPercent: probabilities.get(`${period.validFrom}/${period.validTo}`) ?? null }] : [];
   }).slice(0, 12);
 }
 

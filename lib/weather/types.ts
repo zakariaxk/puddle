@@ -25,6 +25,7 @@ export type ModelPrecipitationPeriod = {
   validFrom: string;
   validTo: string;
   quantitativePrecipitationMm: number | null;
+  probabilityPercent: number | null;
 };
 
 export type WeatherSnapshot = {

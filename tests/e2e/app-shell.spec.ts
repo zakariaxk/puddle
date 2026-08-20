@@ -12,6 +12,13 @@ const radarSnapshot = {
   cache: { status: "miss" as const, expiresAt: "2026-08-19T15:32:00.000Z" },
 };
 
+const forecastSnapshot = {
+  location: { latitude: 28.0683, longitude: -80.5603 }, generatedAt: "2026-08-19T15:30:00.000Z", status: "available", message: "NWS guidance and nearby observations are available.", confidence: "high", fetchedAt: "2026-08-19T15:30:00.000Z",
+  horizons: [{ minutes: 15, probabilityPercent: 40, intensity: "light", arrival: "11:30 AM–11:45 AM" }, { minutes: 30, probabilityPercent: 45, intensity: "light", arrival: "11:30 AM–12:00 PM" }, { minutes: 60, probabilityPercent: 52, intensity: "light", arrival: "11:30 AM–12:30 PM" }, { minutes: 120, probabilityPercent: 44, intensity: "light", arrival: "11:30 AM–12:30 PM" }, { minutes: 360, probabilityPercent: 30, intensity: "light", arrival: "11:30 AM–12:30 PM" }],
+  why: ["NWS forecast guidance indicates a 52% chance of measurable rain in the next hour at this map point.", "This is a transparent reading of NWS guidance, not a trained Puddle model or radar nowcast."],
+  sources: [{ id: "nws-ndfd", provider: "National Weather Service", dataset: "National Digital Forecast Database", kind: "model", status: "available", fetchedAt: "2026-08-19T15:30:00.000Z", sourceTimestamp: "2026-08-19T15:30:00.000Z" }],
+};
+
 test("serves the product shell and exposes its honest no-data states", async ({ page }) => {
   await page.route("**/api/radar", async (route) => {
     await route.fulfill({ contentType: "application/json", body: JSON.stringify(radarSnapshot) });
@@ -24,6 +31,7 @@ test("serves the product shell and exposes its honest no-data states", async ({ 
       }),
     });
   });
+  await page.route("**/api/forecast?*", async (route) => await route.fulfill({ contentType: "application/json", body: JSON.stringify(forecastSnapshot) }));
   await page.goto("/");
 
   await expect(page).toHaveTitle(/Puddle/);
@@ -32,15 +40,16 @@ test("serves the product shell and exposes its honest no-data states", async ({ 
   await expect(page.getByText("Waiting on your location")).toBeVisible();
   await expect(page.getByLabel("Search for a Central Florida place")).toBeVisible();
 
-  await page.getByRole("button", { name: "Why Puddle?" }).click();
-  await expect(page.getByText("Until live sources are connected, it will not guess.")).toBeVisible();
-
   await page.getByLabel("Search for a Central Florida place").fill("Melbourne Beach");
   await page.getByRole("button", { name: "Search" }).click();
   await expect(page.getByRole("button", { name: /Melbourne Beach/ })).toBeVisible();
   await page.getByRole("button", { name: /Melbourne Beach/ }).click();
   await expect(page.getByText("Melbourne Beach, Florida is selected.")).toBeVisible();
   await expect(page.getByText("Selected location")).toBeVisible();
+  await expect(page.locator(".hero-probability")).toHaveText("52%");
+  await expect(page.getByText("Most likely window: 11:30 AM–12:30 PM")).toBeVisible();
+  await page.getByRole("button", { name: "Why Puddle?" }).click();
+  await expect(page.getByText(/not a trained Puddle model/i)).toBeVisible();
 
   const map = page.getByRole("application", { name: /Central Florida map/ });
   await expect(map).toBeVisible();

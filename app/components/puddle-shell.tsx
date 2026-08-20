@@ -1,11 +1,12 @@
 "use client";
 
 import { FormEvent, useCallback, useEffect, useState } from "react";
+import type { ConsumerForecast } from "@/lib/forecast";
 import type { GeocodingResult, LocationSelection } from "@/lib/location";
 import type { RadarSnapshot } from "@/lib/radar";
 import { LocationMap } from "./location-map";
 
-const horizons = ["15 min", "30 min", "1 hour", "2 hours", "6 hours"];
+const horizonLabels = { 15: "15 min", 30: "30 min", 60: "1 hour", 120: "2 hours", 360: "6 hours" } as const;
 
 export function PuddleShell() {
   const [searchMessage, setSearchMessage] = useState("Search Central Florida places or addresses.");
@@ -15,6 +16,9 @@ export function PuddleShell() {
   const [whyOpen, setWhyOpen] = useState(false);
   const [radar, setRadar] = useState<RadarSnapshot | null>(null);
   const [radarError, setRadarError] = useState<string | null>(null);
+  const [forecast, setForecast] = useState<ConsumerForecast | null>(null);
+  const [forecastError, setForecastError] = useState<string | null>(null);
+  const [isForecastLoading, setIsForecastLoading] = useState(false);
 
   const loadRadar = useCallback(async () => {
     setRadarError(null);
@@ -34,6 +38,29 @@ export function PuddleShell() {
     const refresh = window.setInterval(() => void loadRadar(), 2 * 60 * 1000);
     return () => window.clearInterval(refresh);
   }, [loadRadar]);
+
+  const loadForecast = useCallback(async (location: LocationSelection) => {
+    setIsForecastLoading(true);
+    setForecastError(null);
+    try {
+      const response = await fetch(`/api/forecast?latitude=${location.latitude}&longitude=${location.longitude}`);
+      const body = await response.json() as ConsumerForecast & { error?: string };
+      if (!response.ok) throw new Error(body.error);
+      setForecast(body);
+    } catch (error) {
+      setForecast(null);
+      setForecastError(error instanceof Error && error.message ? error.message : "Puddle could not load live forecast guidance. Try again shortly.");
+    } finally {
+      setIsForecastLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!selection) return;
+    queueMicrotask(() => void loadForecast(selection));
+    const refresh = window.setInterval(() => void loadForecast(selection), 5 * 60 * 1000);
+    return () => window.clearInterval(refresh);
+  }, [loadForecast, selection]);
 
   async function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -64,6 +91,7 @@ export function PuddleShell() {
 
   function selectLocation(location: LocationSelection) {
     setSelection(location);
+    setForecast(null);
     setSearchResults([]);
     setSearchMessage(`${location.name} is selected.`);
   }
@@ -118,27 +146,7 @@ export function PuddleShell() {
             {selection ? <p className="selected-location" aria-live="polite"><span>Selected location</span>{selection.name}</p> : null}
           </div>
 
-          <div className="forecast-unavailable" aria-labelledby="forecast-title">
-            <div className="forecast-copy">
-              <p className="section-label">Next hour</p>
-              <h2 id="forecast-title">Waiting on your location</h2>
-              <p>Rain probability, timing, and confidence appear here after a place is selected.</p>
-            </div>
-            <div className="forecast-placeholder" aria-label="Forecast loading placeholder">
-              <span />
-              <span />
-              <span />
-            </div>
-          </div>
-
-          <div className="horizon-list" aria-label="Forecast horizons loading">
-            {horizons.map((horizon) => (
-              <div className="horizon" key={horizon}>
-                <span>{horizon}</span>
-                <i aria-hidden="true" />
-              </div>
-            ))}
-          </div>
+          {!selection ? <ForecastEmpty /> : isForecastLoading ? <ForecastLoading /> : forecast ? <ForecastRead forecast={forecast} /> : <ForecastError message={forecastError} onRetry={() => selection && void loadForecast(selection)} />}
 
           <button
             className="why-button"
@@ -152,7 +160,7 @@ export function PuddleShell() {
           </button>
           {whyOpen ? (
             <div className="why-panel" id="why-panel">
-              Puddle will combine current observations, radar movement, and short-range forecasts. Until live sources are connected, it will not guess.
+              {forecast ? <><p>{forecast.message}</p><ul>{forecast.why.map((reason) => <li key={reason}>{reason}</li>)}</ul><div className="forecast-sources"><strong>Sources</strong>{forecast.sources.map((source) => <span key={source.id}>{source.dataset}: {source.status}{source.sourceTimestamp ? ` · ${new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" }).format(new Date(source.sourceTimestamp))}` : ""}</span>)}</div></> : "Puddle uses live National Weather Service forecast guidance and nearby observations. It will not guess when guidance is unavailable."}
             </div>
           ) : null}
         </div>
@@ -161,4 +169,30 @@ export function PuddleShell() {
       </section>
     </main>
   );
+}
+
+function ForecastEmpty() {
+  return <div className="forecast-unavailable" aria-labelledby="forecast-title"><div className="forecast-copy"><p className="section-label">Next hour</p><h2 id="forecast-title">Waiting on your location</h2><p>Rain probability, timing, and confidence appear here after a place is selected.</p></div><div className="forecast-placeholder" aria-label="Forecast loading placeholder"><span /><span /><span /></div></div>;
+}
+
+function ForecastLoading() {
+  return <div className="forecast-unavailable" aria-live="polite"><div className="forecast-copy"><p className="section-label">Next hour</p><h2>Reading live guidance</h2><p>Puddle is checking the latest National Weather Service forecast for this point.</p></div><div className="forecast-placeholder" aria-label="Loading forecast"><span /><span /><span /></div></div>;
+}
+
+function ForecastError({ message, onRetry }: { message: string | null; onRetry: () => void }) {
+  return <div className="forecast-unavailable forecast-error" role="status"><div className="forecast-copy"><p className="section-label">Next hour</p><h2>Forecast temporarily unavailable</h2><p>{message ?? "Puddle could not load live forecast guidance."}</p><button type="button" className="retry-button" onClick={onRetry}>Try again</button></div></div>;
+}
+
+function ForecastRead({ forecast }: { forecast: ConsumerForecast }) {
+  const hero = forecast.horizons.find((horizon) => horizon.minutes === 60)!;
+  return <>
+    <div className="forecast-read" aria-live="polite">
+      <div><p className="section-label">Chance of measurable rain in the next hour</p><p className="hero-probability">{hero.probabilityPercent}<span>%</span></p><p className="forecast-summary">{hero.arrival ? `Most likely window: ${hero.arrival}` : "No meaningful rain window indicated."}</p></div>
+      <dl className="forecast-details"><div><dt>Intensity</dt><dd>{hero.intensity === "none" ? "None indicated" : `${hero.intensity[0].toUpperCase()}${hero.intensity.slice(1)} rain`}</dd></div><div><dt>Confidence</dt><dd>{forecast.confidence[0].toUpperCase() + forecast.confidence.slice(1)}</dd></div></dl>
+      {forecast.status === "degraded" ? <p className="forecast-degraded">Reduced confidence: some live inputs are unavailable or stale.</p> : null}
+    </div>
+    <div className="horizon-list" aria-label="Rain forecast horizons">
+      {forecast.horizons.map((horizon) => <div className={`horizon ${horizon.minutes === 60 ? "horizon-active" : ""}`} key={horizon.minutes}><span>{horizonLabels[horizon.minutes]}</span><strong>{horizon.probabilityPercent}%</strong><i aria-hidden="true" style={{ width: `${Math.max(8, horizon.probabilityPercent)}%` }} /></div>)}
+    </div>
+  </>;
 }
