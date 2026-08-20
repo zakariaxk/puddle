@@ -4,7 +4,7 @@
   "trainedAt": "2026-08-20T00:00:00.000Z",
   "trainingData": {
     "schemaVersion": "phase-8-v1",
-    "rowCount": 72,
+    "rowCount": 57,
     "firstIssuedAt": "2025-07-02T00:00:00Z",
     "lastIssuedAt": "2025-07-04T08:00:00Z"
   },

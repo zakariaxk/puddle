@@ -1,4 +1,4 @@
-import type { HistoricalDataset, HistoricalDatasetRow } from "./historical-dataset";
+import type { HistoricalDataset, HistoricalDatasetRow } from "./historical-dataset.ts";
 import type { WeatherSnapshot } from "./weather/types";
 
 export const puddleModelSchemaVersion = "phase-9-v1";
@@ -112,7 +112,7 @@ export function trainPuddleModel(dataset: HistoricalDataset, trainedAt: string, 
   const calibration = fitLogistic(calibrationInputs, { means: [0], standardDeviations: [1] }, 1, (row) => row.target);
   const artifact: PuddleModelArtifact = {
     schemaVersion: puddleModelSchemaVersion, version, trainedAt,
-    trainingData: { schemaVersion: dataset.metadata.schemaVersion, rowCount: examples.length, firstIssuedAt: train[0].issuedAt, lastIssuedAt: train.at(-1)!.issuedAt },
+    trainingData: { schemaVersion: dataset.metadata.schemaVersion, rowCount: train.length, firstIssuedAt: train[0].issuedAt, lastIssuedAt: train.at(-1)!.issuedAt },
     featureNames: [...featureNames], normalization, logisticRegression,
     calibration: { method: "platt", intercept: calibration.intercept, coefficient: calibration.coefficients[0] },
     validation: { rowCount: validation.length, positiveCount: validation.filter((row) => row.target === 1).length, brierScore: 0, baselineBrierScore: 0, selected: false },

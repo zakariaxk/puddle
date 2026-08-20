@@ -16,6 +16,7 @@
     "test:e2e": "playwright test",
     "dataset:build": "node --experimental-strip-types scripts/build-historical-dataset.ts",
     "model:train": "node --experimental-strip-types scripts/train-puddle-model.ts",
+    "forecast:evaluate": "node --experimental-strip-types scripts/evaluate-puddle-forecasts.ts",
     "verify": "npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {

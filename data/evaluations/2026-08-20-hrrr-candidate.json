@@ -1,0 +1,326 @@
+{
+  "schemaVersion": "phase-10-v1",
+  "generatedAt": "2026-08-20T00:00:00.000Z",
+  "model": {
+    "version": "puddle-hrrr-logistic-candidate-v1",
+    "trainedAt": "2026-08-20T00:00:00.000Z",
+    "trainingData": {
+      "schemaVersion": "phase-8-v1",
+      "rowCount": 57,
+      "firstIssuedAt": "2025-07-02T00:00:00Z",
+      "lastIssuedAt": "2025-07-04T08:00:00Z"
+    }
+  },
+  "dataWindow": {
+    "firstIssuedAt": "2025-07-04T09:00:00Z",
+    "lastIssuedAt": "2025-07-04T23:00:00Z",
+    "inputRowCount": 72,
+    "independentRowCount": 15,
+    "excludedOverlappingTrainingRows": 57,
+    "measurableRainThresholdMm": 0.1
+  },
+  "comparison": {
+    "commonEligibleSampleCount": 0,
+    "systems": {
+      "puddle": {
+        "eligibleSampleCount": 15,
+        "metrics": {
+          "sampleCount": 15,
+          "positiveCount": 5,
+          "brierScore": 0.229167,
+          "logLoss": 0.653886,
+          "rocAuc": 0.5,
+          "expectedCalibrationError": 0.083333,
+          "reliability": [
+            {
+              "lowerBoundPercent": 20,
+              "upperBoundPercent": 30,
+              "sampleCount": 15,
+              "meanProbabilityPercent": 25,
+              "observedRainRatePercent": 33.333333
+            }
+          ]
+        },
+        "arrival": null,
+        "slices": {
+          "horizonMinutes": [
+            {
+              "name": "60m",
+              "metrics": {
+                "sampleCount": 15,
+                "positiveCount": 5,
+                "brierScore": 0.229167,
+                "logLoss": 0.653886,
+                "rocAuc": 0.5,
+                "expectedCalibrationError": 0.083333,
+                "reliability": [
+                  {
+                    "lowerBoundPercent": 20,
+                    "upperBoundPercent": 30,
+                    "sampleCount": 15,
+                    "meanProbabilityPercent": 25,
+                    "observedRainRatePercent": 33.333333
+                  }
+                ]
+              },
+              "reason": null
+            }
+          ],
+          "season": [
+            {
+              "name": "winter",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "spring",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "summer",
+              "metrics": {
+                "sampleCount": 15,
+                "positiveCount": 5,
+                "brierScore": 0.229167,
+                "logLoss": 0.653886,
+                "rocAuc": 0.5,
+                "expectedCalibrationError": 0.083333,
+                "reliability": [
+                  {
+                    "lowerBoundPercent": 20,
+                    "upperBoundPercent": 30,
+                    "sampleCount": 15,
+                    "meanProbabilityPercent": 25,
+                    "observedRainRatePercent": 33.333333
+                  }
+                ]
+              },
+              "reason": null
+            },
+            {
+              "name": "fall",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ],
+          "convectiveEvent": [
+            {
+              "name": "convective",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "non-convective",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ]
+        },
+        "reason": null
+      },
+      "nws": {
+        "eligibleSampleCount": 0,
+        "metrics": null,
+        "arrival": null,
+        "slices": {
+          "horizonMinutes": [
+            {
+              "name": "60m",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ],
+          "season": [
+            {
+              "name": "winter",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "spring",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "summer",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "fall",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ],
+          "convectiveEvent": [
+            {
+              "name": "convective",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "non-convective",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ]
+        },
+        "reason": "No eligible predictions and verified outcomes were available for this system."
+      },
+      "hrrr": {
+        "eligibleSampleCount": 15,
+        "metrics": {
+          "sampleCount": 15,
+          "positiveCount": 5,
+          "brierScore": 0.3025,
+          "logLoss": 1.032773,
+          "rocAuc": 0.5,
+          "expectedCalibrationError": 0.283333,
+          "reliability": [
+            {
+              "lowerBoundPercent": 0,
+              "upperBoundPercent": 10,
+              "sampleCount": 15,
+              "meanProbabilityPercent": 5,
+              "observedRainRatePercent": 33.333333
+            }
+          ]
+        },
+        "arrival": null,
+        "slices": {
+          "horizonMinutes": [
+            {
+              "name": "60m",
+              "metrics": {
+                "sampleCount": 15,
+                "positiveCount": 5,
+                "brierScore": 0.3025,
+                "logLoss": 1.032773,
+                "rocAuc": 0.5,
+                "expectedCalibrationError": 0.283333,
+                "reliability": [
+                  {
+                    "lowerBoundPercent": 0,
+                    "upperBoundPercent": 10,
+                    "sampleCount": 15,
+                    "meanProbabilityPercent": 5,
+                    "observedRainRatePercent": 33.333333
+                  }
+                ]
+              },
+              "reason": null
+            }
+          ],
+          "season": [
+            {
+              "name": "winter",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "spring",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "summer",
+              "metrics": {
+                "sampleCount": 15,
+                "positiveCount": 5,
+                "brierScore": 0.3025,
+                "logLoss": 1.032773,
+                "rocAuc": 0.5,
+                "expectedCalibrationError": 0.283333,
+                "reliability": [
+                  {
+                    "lowerBoundPercent": 0,
+                    "upperBoundPercent": 10,
+                    "sampleCount": 15,
+                    "meanProbabilityPercent": 5,
+                    "observedRainRatePercent": 33.333333
+                  }
+                ]
+              },
+              "reason": null
+            },
+            {
+              "name": "fall",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ],
+          "convectiveEvent": [
+            {
+              "name": "convective",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "non-convective",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ]
+        },
+        "reason": null
+      },
+      "equalWeightEnsemble": {
+        "eligibleSampleCount": 0,
+        "metrics": null,
+        "arrival": null,
+        "slices": {
+          "horizonMinutes": [
+            {
+              "name": "60m",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ],
+          "season": [
+            {
+              "name": "winter",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "spring",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "summer",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "fall",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ],
+          "convectiveEvent": [
+            {
+              "name": "convective",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            },
+            {
+              "name": "non-convective",
+              "metrics": null,
+              "reason": "No eligible predictions and verified outcomes were available for this slice."
+            }
+          ]
+        },
+        "reason": "No eligible predictions and verified outcomes were available for this system."
+      }
+    }
+  },
+  "limitations": [
+    "Only forecasts issued after the model training window are included, preventing training-data results from being presented as independent evaluation.",
+    "ROC-AUC is secondary and is omitted for slices with only one observed outcome class.",
+    "Convective-event slices are unavailable because the dataset has no convective-event labels.",
+    "Arrival-time MAE is unavailable because the dataset has no matched arrival observations.",
+    "No apples-to-apples comparison is available yet: at least one system is missing from every independent verified row."
+  ]
+}
