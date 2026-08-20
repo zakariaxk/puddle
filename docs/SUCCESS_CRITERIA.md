@@ -97,6 +97,38 @@ Audit every completed phase against the applicable items below. A phase is not d
 - [ ] The forecast is persisted with model version, forecast source, compact feature snapshot, and source timestamps.
 - [ ] A deliberately unavailable required ML source verifies the provider fallback API and UI path.
 
+## Forecast Feedback Loop (Phase 14)
+
+### Product behavior
+
+- [ ] Feedback is offered only after the associated forecast window expires.
+- [ ] The primary interaction is optional, lightweight, one-tap, and limited to `Yes, it rained`, `No rain here`, or `Not sure`.
+- [ ] Optional timing (`Early`, `About right`, `Late`) and intensity feedback never makes the primary response cumbersome.
+- [ ] The interaction is clearly feedback, not a survey, and does not imply continuous location tracking.
+
+### Verification and provenance
+
+- [ ] Every feedback record is tied to the exact prediction, forecast issue time, window start/end, and selected location.
+- [ ] Forecast source and model version are retained or referenced through the original prediction record.
+- [ ] User outcome, optional timing/intensity feedback, automatic outcome, submission time, and verification confidence are auditable using repository naming conventions.
+- [ ] Automatic evidence may use trusted supported observations such as radar/MRMS, stations, or gauges, and observed versus human-reported outcomes remain distinguishable.
+- [ ] Records distinguish high-confidence agreement, automatic-only, human-only, disputed, and unknown evidence states; feedback is not treated as equally reliable by default.
+- [ ] Duplicate or repeated submissions have defined, tested behavior and do not corrupt the audit trail.
+
+### Model safety and data quality
+
+- [ ] A single user response never directly updates the live production model.
+- [ ] Feedback enters future training/evaluation only through stored records, evidence reconciliation, candidate training, validation, and explicit promotion safeguards.
+- [ ] No implementation documentation calls this RLHF; terminology describes forecast feedback or human verification.
+- [ ] Training and evaluation datasets preserve forecast-time provenance and contain no future-data leakage.
+- [ ] Feedback cannot bypass model versioning, calibration, baseline comparison, or promotion rules.
+
+### Privacy
+
+- [ ] Feedback references the location already associated with the forecast and stores no unnecessary location data.
+- [ ] No continuous user-location history is created solely for feedback.
+- [ ] Retention, access, and deletion behavior for feedback records is documented and tested where applicable.
+
 ## Git
 
 - [ ] Commits are coherent and descriptively named.

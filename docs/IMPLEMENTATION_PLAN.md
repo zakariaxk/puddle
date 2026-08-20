@@ -460,3 +460,41 @@ Likely boundaries: documentation; live HRRR ingestion; shared feature contract; 
 
 ### Stop Condition
 Real current weather flows through fresh live features, a promoted calibrated model, the forecast API, and the consumer UI for Central Florida locations; persistence and fallback have both been verified. If no candidate honestly beats its baseline, do not promote it: retain provider fallback and report the data limitation instead.
+
+## Phase 14 — Forecast Feedback Loop
+
+### Goal
+Add an optional, human-in-the-loop forecast verification flow so users can report whether Puddle got the outcome right at the exact location and forecast window they received.
+
+### Scope
+Post-window, one-tap feedback with `Yes, it rained`, `No rain here`, and `Not sure`; optional secondary timing and intensity feedback; auditable linkage to the original prediction, location, forecast window, source, and model version; automatic meteorological verification; verification confidence; privacy-preserving storage; and future dataset/evaluation workflows.
+
+### Out of Scope
+Immediate online learning, direct production-model updates from user responses, continuous location tracking, surveys, mandatory feedback, and a generic feedback dashboard.
+
+### Requirements
+- Offer feedback only after the forecast window expires, keep it optional, and make the primary response a single tap.
+- Tie every response to the exact prediction, issue time, window start/end, selected latitude/longitude, forecast source, and model version; reference existing prediction records rather than duplicating data unnecessarily.
+- Preserve equivalent fields for the user outcome, optional timing and intensity feedback, automatic outcome, verification confidence, and submission time, using repository naming conventions when implemented.
+- Treat feedback as a stored verification signal, not an immediate training signal. A single response must never directly update the live production model.
+- Combine human feedback and automatic observations into future training/evaluation datasets through an auditable flow: stored record, evidence reconciliation, candidate training, validation, and promotion only if better.
+- Do not call this RLHF; use forecast feedback, human verification, user-reported outcome, or human-labeled verification.
+- Store only location information already associated with the forecast. Do not create continuous user-location history solely for feedback.
+
+### Tests
+Window-expiration eligibility, one-tap and optional-response behavior, duplicate/idempotent submissions, exact prediction/location/window/provenance linkage, confidence-state derivation, automatic-plus-human reconciliation, disputed and unavailable evidence, privacy/retention constraints, and proof that feedback cannot mutate the live model or bypass promotion.
+
+### End-to-End Verification
+Create a real forecast, let its window expire in a controlled test, submit each primary outcome and optional fields, verify the auditable record and provenance, attach automatic observational evidence, and confirm the resulting verification state is available to evaluation without changing live inference. Verify weak or conflicting evidence produces human-only, unknown, or disputed states as appropriate.
+
+### UI/UX Verification
+Inspect the expired-window prompt on desktop and mobile, confirm it is clearly optional and not survey-like, verify one-tap completion, readable outcome labels, accessible controls, no location-history implication, and unobtrusive handling of secondary questions.
+
+### Success Criteria
+All dedicated Forecast Feedback Loop criteria in `docs/SUCCESS_CRITERIA.md` pass. Feedback is auditable, privacy-minimal, confidence-aware, and useful for future evaluation without directly retraining or changing the live model.
+
+### Commit Plan
+Likely boundaries: feedback eligibility and interaction; verification persistence/provenance; observational reconciliation and confidence; evaluation export and safeguards; tests. Each independently working change is verified, committed, and pushed to `origin/main` before continuing.
+
+### Stop Condition
+An expired real forecast can receive an optional one-tap report, the report is stored and reconciled with automatic evidence, provenance and confidence are auditable, and no feedback path can directly alter production inference. Do not begin a subsequent phase automatically.
