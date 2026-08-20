@@ -154,10 +154,8 @@ export function LocationMap({ selection, probabilityPercent, onSelect, radar, no
       const markerElement = markerRef.current?.getElement() ?? document.createElement("div");
       markerElement.className = "puddle-map-marker";
       markerElement.setAttribute("aria-label", `Selected location: ${selection.name}${probabilityPercent === null ? "" : `. ${probabilityPercent}% chance of measurable rain in the next hour.`}`);
-      const markerLabel = document.createElement("span");
-      markerLabel.setAttribute("aria-hidden", "true");
-      markerLabel.textContent = probabilityPercent === null ? "P" : `${probabilityPercent}%`;
-      markerElement.replaceChildren(markerLabel);
+      markerElement.setAttribute("aria-hidden", "true");
+      markerElement.replaceChildren();
 
       if (!markerRef.current) {
         markerRef.current = new Marker({ element: markerElement, anchor: "bottom" }).setLngLat(coordinates).addTo(mapRef.current);

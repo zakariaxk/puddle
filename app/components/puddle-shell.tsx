@@ -255,7 +255,7 @@ function ForecastRead({ forecast, change }: { forecast: ConsumerForecast; change
       {change ? <p className="forecast-change" aria-live="polite">{change}</p> : null}
     </div>
     <div className="horizon-list" aria-label="Rain forecast horizons">
-      {forecast.horizons.map((horizon) => <div className={`horizon ${horizon.minutes === 60 ? "horizon-active" : ""}`} key={horizon.minutes}><span>{horizonLabels[horizon.minutes]}</span><strong>{horizon.probabilityPercent}%</strong><i aria-hidden="true" style={{ width: `${Math.max(8, horizon.probabilityPercent)}%` }} /></div>)}
+      {forecast.horizons.map((horizon) => <div className={`horizon ${horizon.minutes === 60 ? "horizon-active" : ""}`} key={horizon.minutes}><span>{horizonLabels[horizon.minutes]}</span><strong>{horizon.probabilityPercent}%</strong><i aria-hidden="true" style={{ width: `${horizon.probabilityPercent}%` }} /></div>)}
     </div>
   </>;
 }

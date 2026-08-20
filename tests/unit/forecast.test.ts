@@ -32,4 +32,12 @@ describe("consumer forecast", () => {
     const unavailable = createConsumerForecast({ ...snapshot, model: null, status: "degraded" });
     expect(unavailable).toMatchObject({ status: "unavailable", confidence: "low", horizons: [] });
   });
+
+  it("does not invent a minimum rain chance when live guidance is dry", () => {
+    const dry = createConsumerForecast({
+      ...snapshot,
+      model: { ...snapshot.model!, precipitation: [{ validFrom: "2026-08-20T12:00:00.000Z", validTo: "2026-08-20T13:00:00.000Z", quantitativePrecipitationMm: 0, probabilityPercent: null }] },
+    }, Date.parse("2026-08-20T12:00:00.000Z"));
+    expect(dry.horizons.find((horizon) => horizon.minutes === 60)?.probabilityPercent).toBe(0);
+  });
 });

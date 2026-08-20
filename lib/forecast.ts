@@ -35,7 +35,7 @@ function formatTimeRange(start: number, end: number) {
 }
 
 function probabilityFromQpf(mm: number) {
-  if (mm < 0.1) return 8;
+  if (mm < 0.1) return 0;
   return clamp(18 + mm * 36);
 }
 
