@@ -19,3 +19,6 @@
 *.tsbuildinfo
 next-env.d.ts
 npm-debug.log*
+
+# Locally trained model artifacts are only promoted after independent review.
+/data/models/*.json

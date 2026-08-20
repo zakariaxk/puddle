@@ -15,6 +15,7 @@ export type ConsumerForecast = {
     arrival: string | null;
   }>;
   confidence: "high" | "moderate" | "low";
+  modelVersion: string;
   why: string[];
   sources: WeatherSnapshot["health"];
   fetchedAt: string;
@@ -85,7 +86,7 @@ export function createConsumerForecast(snapshot: WeatherSnapshot, now = Date.now
       location: snapshot.location, generatedAt: new Date(now).toISOString(), status: "unavailable",
       message: "Puddle cannot make a next-hour estimate until the NWS forecast guidance returns.",
       horizons: [], confidence: "low", why: ["NWS forecast guidance is temporarily unavailable, so Puddle will not estimate a chance of rain."],
-      sources: snapshot.health, fetchedAt: snapshot.fetchedAt,
+      sources: snapshot.health, fetchedAt: snapshot.fetchedAt, modelVersion: "nws-guidance-v1",
     };
   }
 
@@ -107,6 +108,6 @@ export function createConsumerForecast(snapshot: WeatherSnapshot, now = Date.now
   return {
     location: snapshot.location, generatedAt: new Date(now).toISOString(), status,
     message: status === "available" ? "NWS guidance and nearby observations are available." : "Some live inputs are unavailable or stale, so confidence is reduced.",
-    horizons, confidence, why, sources: snapshot.health, fetchedAt: snapshot.fetchedAt,
+    horizons, confidence, why, sources: snapshot.health, fetchedAt: snapshot.fetchedAt, modelVersion: "nws-guidance-v1",
   };
 }

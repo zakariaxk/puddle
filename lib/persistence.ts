@@ -92,7 +92,7 @@ export async function recordForecast({ forecast }: ForecastRunInput) {
     probability_percent: horizon.probabilityPercent,
     intensity: horizon.intensity,
     arrival_window: horizon.arrival,
-    model_version: "nws-guidance-v1",
+    model_version: forecast.modelVersion,
   }));
   const { error: predictionsError } = await client.from("forecast_predictions").insert(predictions);
   if (predictionsError) throw new Error(predictionsError.message);

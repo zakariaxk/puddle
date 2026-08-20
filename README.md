@@ -46,6 +46,16 @@ npm run dataset:build -- data/raw/central-florida.json data/derived/central-flor
 
 The input has `snapshots` (with `issuedAt`, `availableAt`, location, target window, NWS probability, HRRR precipitation, and source IDs) and `observations` (with `observedAt`, `availableAt`, location, precipitation, and source ID). Outputs are deterministic for identical input and build timestamp.
 
+## Puddle model training (Phase 9)
+
+The first production candidate is deliberately small: a calibrated logistic regression using the archived NWS next-hour probability. Training is chronological: all training rows precede the held-out validation period. The trainer rejects leakage, requires at least 52 eligible rows, applies Platt calibration, and writes an artifact only when the calibrated model improves held-out Brier score over archived NWS guidance with both rain and non-rain validation examples.
+
+```bash
+npm run model:train -- data/derived/central-florida.json data/models/puddle-logistic-v1.json 2026-08-21T00:00:00.000Z
+```
+
+The generated artifact records its feature contract, normalization, calibration, source dataset schema, time range, and validation metrics. `data/models` is ignored by default: review a candidate artifact before promoting it through the release process. When no valid artifact is present, malformed, or lacks a feature available at inference time, the live forecast remains the transparent provider-derived NWS guidance. This avoids unsupported performance claims while the historical archive grows.
+
 ## Persistence (Phase 6)
 
 Forecast provenance is stored only when both server-only variables in `.env.local` are set:

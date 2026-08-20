@@ -1,4 +1,6 @@
 import { createConsumerForecast } from "@/lib/forecast";
+import { applyPuddleModel } from "@/lib/ml-inference";
+import { loadProductionPuddleModel } from "@/lib/ml-model";
 import { recordForecast } from "@/lib/persistence";
 import { getNwsWeatherSnapshot } from "@/lib/weather/nws";
 
@@ -12,7 +14,10 @@ export async function GET(request: Request) {
     return Response.json({ error: "Provide valid latitude and longitude query parameters." }, { status: 400 });
   }
   try {
-    const forecast = createConsumerForecast(await getNwsWeatherSnapshot(latitude, longitude));
+    const snapshot = await getNwsWeatherSnapshot(latitude, longitude);
+    const baseForecast = createConsumerForecast(snapshot);
+    const artifact = await loadProductionPuddleModel();
+    const forecast = artifact ? applyPuddleModel(baseForecast, snapshot, artifact) : baseForecast;
     try {
       await recordForecast({ forecast });
     } catch {
