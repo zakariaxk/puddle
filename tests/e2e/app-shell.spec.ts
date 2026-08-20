@@ -1,6 +1,21 @@
 import { expect, test } from "@playwright/test";
 
+const radarSnapshot = {
+  provider: "RainViewer",
+  dataset: "Weather radar observations",
+  fetchedAt: "2026-08-19T15:30:00.000Z",
+  latestObservedAt: "2026-08-19T15:30:00.000Z",
+  frames: [
+    { observedAt: "2026-08-19T15:20:00.000Z", tileUrl: "https://tiles.example.test/one/{z}/{x}/{y}.png" },
+    { observedAt: "2026-08-19T15:30:00.000Z", tileUrl: "https://tiles.example.test/two/{z}/{x}/{y}.png" },
+  ],
+  cache: { status: "miss" as const, expiresAt: "2026-08-19T15:32:00.000Z" },
+};
+
 test("serves the product shell and exposes its honest no-data states", async ({ page }) => {
+  await page.route("**/api/radar", async (route) => {
+    await route.fulfill({ contentType: "application/json", body: JSON.stringify(radarSnapshot) });
+  });
   await page.route("**/api/location/search?q=Melbourne%20Beach", async (route) => {
     await route.fulfill({
       contentType: "application/json",
@@ -29,6 +44,27 @@ test("serves the product shell and exposes its honest no-data states", async ({ 
 
   const map = page.getByRole("application", { name: /Central Florida map/ });
   await expect(map).toBeVisible();
+  await expect(page.getByText("Radar observed")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Weather data by RainViewer" })).toBeVisible();
+  await page.getByRole("button", { name: "Play recent radar" }).click();
+  await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
   await map.click({ position: { x: 170, y: 180 } });
   await expect(page.locator(".search-status")).toContainText(/Selected point \(/);
+});
+
+test("keeps radar still for reduced motion and recovers from a failed source", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  let attempts = 0;
+  await page.route("**/api/radar", async (route) => {
+    attempts += 1;
+    if (attempts === 1) await route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "Live radar is temporarily unavailable. Try again shortly." }) });
+    else await route.fulfill({ contentType: "application/json", body: JSON.stringify(radarSnapshot) });
+  });
+
+  await page.goto("/");
+  await expect(page.getByText("Radar is being stubborn.")).toBeVisible();
+  await page.getByRole("button", { name: "Try again" }).click();
+  await expect(page.getByRole("button", { name: "Play recent radar" })).toBeVisible();
+  await page.getByRole("button", { name: "Play recent radar" }).click();
+  await expect(page.getByRole("button", { name: "Play recent radar" })).toBeVisible();
 });

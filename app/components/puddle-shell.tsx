@@ -1,7 +1,8 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import type { GeocodingResult, LocationSelection } from "@/lib/location";
+import type { RadarSnapshot } from "@/lib/radar";
 import { LocationMap } from "./location-map";
 
 const horizons = ["15 min", "30 min", "1 hour", "2 hours", "6 hours"];
@@ -12,6 +13,27 @@ export function PuddleShell() {
   const [selection, setSelection] = useState<LocationSelection | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [whyOpen, setWhyOpen] = useState(false);
+  const [radar, setRadar] = useState<RadarSnapshot | null>(null);
+  const [radarError, setRadarError] = useState<string | null>(null);
+
+  const loadRadar = useCallback(async () => {
+    setRadarError(null);
+    try {
+      const response = await fetch("/api/radar");
+      const body = await response.json() as RadarSnapshot & { error?: string };
+      if (!response.ok) throw new Error(body.error);
+      setRadar(body);
+    } catch (error) {
+      setRadar(null);
+      setRadarError(error instanceof Error && error.message ? error.message : "Live radar is temporarily unavailable. Try again shortly.");
+    }
+  }, []);
+
+  useEffect(() => {
+    queueMicrotask(() => void loadRadar());
+    const refresh = window.setInterval(() => void loadRadar(), 2 * 60 * 1000);
+    return () => window.clearInterval(refresh);
+  }, [loadRadar]);
 
   async function handleSearch(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -135,7 +157,7 @@ export function PuddleShell() {
           ) : null}
         </div>
 
-        <LocationMap selection={selection} onSelect={selectLocation} />
+        <LocationMap selection={selection} onSelect={selectLocation} radar={radar} radarError={radarError} onRetryRadar={() => void loadRadar()} />
       </section>
     </main>
   );

@@ -10,7 +10,7 @@ describe("application shell", () => {
     expect(markup).toContain("Puddle");
     expect(markup).toContain("Is rain actually coming your way?");
     expect(markup).toContain("Waiting on your location");
-    expect(markup).toContain("Choose a point");
+    expect(markup).toContain("Observed radar");
     expect(markup).toContain("Click or tap anywhere on the map to set your exact location.");
     expect(markup).not.toMatch(/\d+% chance|rain likely|arrival:/i);
   });
