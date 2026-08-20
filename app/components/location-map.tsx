@@ -3,17 +3,21 @@
 import { useEffect, useRef, useState } from "react";
 import type { LocationSelection } from "@/lib/location";
 import type { RadarSnapshot } from "@/lib/radar";
+import type { RadarNowcast } from "@/lib/nowcast";
 
 type LocationMapProps = {
   selection: LocationSelection | null;
   onSelect: (location: LocationSelection) => void;
   radar: RadarSnapshot | null;
+  nowcast: RadarNowcast | null;
   radarError: string | null;
   onRetryRadar: () => void;
 };
 
 const radarSourceId = "puddle-radar";
 const radarLayerId = "puddle-radar-layer";
+const projectionSourceId = "puddle-nowcast-projection";
+const projectionLayerId = "puddle-nowcast-projection-layer";
 
 function applyRadarFrame(map: import("maplibre-gl").Map, tileUrl: string | null) {
   if (map.getLayer(radarLayerId)) map.removeLayer(radarLayerId);
@@ -27,7 +31,25 @@ function formatObservedTime(timestamp: string) {
   return new Intl.DateTimeFormat(undefined, { hour: "numeric", minute: "2-digit" }).format(new Date(timestamp));
 }
 
-export function LocationMap({ selection, onSelect, radar, radarError, onRetryRadar }: LocationMapProps) {
+function gridPointToCoordinate(x: number, y: number): [number, number] {
+  const worldPixels = 256 * 2 ** 7;
+  const pixelX = 34 * 256 + x * 16;
+  const pixelY = 52 * 256 + y * 16;
+  const longitude = pixelX / worldPixels * 360 - 180;
+  const latitude = Math.atan(Math.sinh(Math.PI * (1 - 2 * pixelY / worldPixels))) * 180 / Math.PI;
+  return [longitude, latitude];
+}
+
+function applyProjection(map: import("maplibre-gl").Map, nowcast: RadarNowcast | null, minutes: 15 | 30 | 60 | null) {
+  if (map.getLayer(projectionLayerId)) map.removeLayer(projectionLayerId);
+  if (map.getSource(projectionSourceId)) map.removeSource(projectionSourceId);
+  const projection = nowcast?.status === "available" && minutes ? nowcast.projections.find((item) => item.minutes === minutes) : null;
+  if (!projection) return;
+  map.addSource(projectionSourceId, { type: "geojson", data: { type: "Feature", properties: { radius: projection.uncertaintyPixels }, geometry: { type: "Point", coordinates: gridPointToCoordinate(projection.x, projection.y) } } });
+  map.addLayer({ id: projectionLayerId, type: "circle", source: projectionSourceId, paint: { "circle-radius": ["get", "radius"], "circle-color": "#207d86", "circle-opacity": 0.18, "circle-stroke-color": "#0f555f", "circle-stroke-width": 2, "circle-stroke-opacity": 0.7 } });
+}
+
+export function LocationMap({ selection, onSelect, radar, nowcast, radarError, onRetryRadar }: LocationMapProps) {
   const mapElement = useRef<HTMLDivElement>(null);
   const mapRef = useRef<import("maplibre-gl").Map | null>(null);
   const markerRef = useRef<import("maplibre-gl").Marker | null>(null);
@@ -35,6 +57,7 @@ export function LocationMap({ selection, onSelect, radar, radarError, onRetryRad
   const radarTileRef = useRef<string | null>(null);
   const [frameIndex, setFrameIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [projectionMinutes, setProjectionMinutes] = useState<15 | 30 | 60 | null>(null);
   const frames = radar?.frames ?? [];
   const activeFrame = frames[frameIndex] ?? null;
 
@@ -69,7 +92,7 @@ export function LocationMap({ selection, onSelect, radar, radarError, onRetryRad
       });
 
       map.addControl(new NavigationControl({ showCompass: false }), "top-right");
-      map.on("load", () => applyRadarFrame(map, radarTileRef.current));
+      map.on("load", () => { applyRadarFrame(map, radarTileRef.current); applyProjection(map, null, null); });
       map.on("click", (event) => {
         const latitude = event.lngLat.lat;
         const longitude = event.lngLat.lng;
@@ -104,6 +127,11 @@ export function LocationMap({ selection, onSelect, radar, radarError, onRetryRad
     const map = mapRef.current;
     if (map?.isStyleLoaded()) applyRadarFrame(map, tileUrl);
   }, [activeFrame?.tileUrl]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (map?.isStyleLoaded()) applyProjection(map, nowcast, projectionMinutes);
+  }, [nowcast, projectionMinutes]);
 
   useEffect(() => {
     if (!isPlaying || frames.length < 2) return;
@@ -145,7 +173,7 @@ export function LocationMap({ selection, onSelect, radar, radarError, onRetryRad
         role="application"
         aria-label="Central Florida map. Click or tap a point to choose a location."
       />
-      <div className="map-chrome"><span>Observed radar</span><span className="map-status">Central Florida</span></div>
+      <div className="map-chrome"><span>{projectionMinutes ? `Projected radar · ${projectionMinutes} min` : "Observed radar"}</span><span className="map-status">Central Florida</span></div>
       <div className="radar-controls" aria-label="Live radar controls">
         {activeFrame ? (
           <>
@@ -155,6 +183,9 @@ export function LocationMap({ selection, onSelect, radar, radarError, onRetryRad
                 {isPlaying ? "Pause" : "Play recent radar"}
               </button>
               <input aria-label="Radar frame" type="range" min="0" max={Math.max(0, frames.length - 1)} value={frameIndex} onChange={(event) => { setIsPlaying(false); setFrameIndex(Number(event.target.value)); }} />
+            </div>
+            <div className="nowcast-controls">
+              {nowcast?.status === "available" ? <><span>Projection estimate</span><div>{([15, 30, 60] as const).map((minutes) => <button key={minutes} type="button" aria-pressed={projectionMinutes === minutes} onClick={() => { setIsPlaying(false); setProjectionMinutes((current) => current === minutes ? null : minutes); }}>{minutes}m</button>)}</div><small>{nowcast.message}</small></> : <small>{nowcast?.message ?? "Checking whether recent radar frames support a projection…"}</small>}
             </div>
           </>
         ) : (

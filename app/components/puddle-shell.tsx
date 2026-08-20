@@ -4,6 +4,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import type { ConsumerForecast } from "@/lib/forecast";
 import type { GeocodingResult, LocationSelection } from "@/lib/location";
 import type { RadarSnapshot } from "@/lib/radar";
+import type { RadarNowcast } from "@/lib/nowcast";
 import { LocationMap } from "./location-map";
 
 const horizonLabels = { 15: "15 min", 30: "30 min", 60: "1 hour", 120: "2 hours", 360: "6 hours" } as const;
@@ -19,6 +20,7 @@ export function PuddleShell() {
   const [whyOpen, setWhyOpen] = useState(false);
   const [radar, setRadar] = useState<RadarSnapshot | null>(null);
   const [radarError, setRadarError] = useState<string | null>(null);
+  const [nowcast, setNowcast] = useState<RadarNowcast | null>(null);
   const [forecast, setForecast] = useState<ConsumerForecast | null>(null);
   const [forecastError, setForecastError] = useState<string | null>(null);
   const [isForecastLoading, setIsForecastLoading] = useState(false);
@@ -64,6 +66,22 @@ export function PuddleShell() {
     const refresh = window.setInterval(() => void loadRadar(), 2 * 60 * 1000);
     return () => window.clearInterval(refresh);
   }, [loadRadar]);
+
+  const loadNowcast = useCallback(async () => {
+    try {
+      const response = await fetch("/api/radar/nowcast");
+      if (!response.ok) throw new Error("Nowcast unavailable");
+      setNowcast(await response.json() as RadarNowcast);
+    } catch {
+      setNowcast(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    queueMicrotask(() => void loadNowcast());
+    const refresh = window.setInterval(() => void loadNowcast(), 2 * 60 * 1000);
+    return () => window.clearInterval(refresh);
+  }, [loadNowcast]);
 
   const loadForecast = useCallback(async (location: LocationSelection) => {
     setIsForecastLoading(true);
@@ -192,7 +210,7 @@ export function PuddleShell() {
           ) : null}
         </div>
 
-        <LocationMap selection={selection} onSelect={selectLocation} radar={radar} radarError={radarError} onRetryRadar={() => void loadRadar()} />
+        <LocationMap selection={selection} onSelect={selectLocation} radar={radar} nowcast={nowcast} radarError={radarError} onRetryRadar={() => { void loadRadar(); void loadNowcast(); }} />
       </section>
     </main>
   );
