@@ -7,6 +7,9 @@ import type { RadarSnapshot } from "@/lib/radar";
 import { LocationMap } from "./location-map";
 
 const horizonLabels = { 15: "15 min", 30: "30 min", 60: "1 hour", 120: "2 hours", 360: "6 hours" } as const;
+const savedLocationsKey = "puddle-saved-locations";
+
+type SavedLocation = LocationSelection & { id: string };
 
 export function PuddleShell() {
   const [searchMessage, setSearchMessage] = useState("Search Central Florida places or addresses.");
@@ -19,6 +22,29 @@ export function PuddleShell() {
   const [forecast, setForecast] = useState<ConsumerForecast | null>(null);
   const [forecastError, setForecastError] = useState<string | null>(null);
   const [isForecastLoading, setIsForecastLoading] = useState(false);
+  const [savedLocations, setSavedLocations] = useState<SavedLocation[]>([]);
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(window.localStorage.getItem(savedLocationsKey) ?? "[]") as SavedLocation[];
+      if (Array.isArray(saved)) queueMicrotask(() => setSavedLocations(saved.filter((location) => typeof location.id === "string" && typeof location.name === "string")));
+    } catch {
+      window.localStorage.removeItem(savedLocationsKey);
+    }
+  }, []);
+
+  function saveLocation() {
+    if (!selection || savedLocations.some((location) => location.latitude === selection.latitude && location.longitude === selection.longitude)) return;
+    const next = [...savedLocations, { ...selection, id: crypto.randomUUID() }];
+    setSavedLocations(next);
+    try { window.localStorage.setItem(savedLocationsKey, JSON.stringify(next)); } catch { /* Saving a place is optional. */ }
+  }
+
+  function removeSavedLocation(id: string) {
+    const next = savedLocations.filter((location) => location.id !== id);
+    setSavedLocations(next);
+    try { window.localStorage.setItem(savedLocationsKey, JSON.stringify(next)); } catch { /* Local storage can be unavailable. */ }
+  }
 
   const loadRadar = useCallback(async () => {
     setRadarError(null);
@@ -143,7 +169,8 @@ export function PuddleShell() {
                 ))}
               </ul>
             ) : null}
-            {selection ? <p className="selected-location" aria-live="polite"><span>Selected location</span>{selection.name}</p> : null}
+            {selection ? <div className="selected-location" aria-live="polite"><span>Selected location</span><strong>{selection.name}</strong><button type="button" onClick={saveLocation} disabled={savedLocations.some((location) => location.latitude === selection.latitude && location.longitude === selection.longitude)}>{savedLocations.some((location) => location.latitude === selection.latitude && location.longitude === selection.longitude) ? "Saved" : "Save this place"}</button></div> : null}
+            {savedLocations.length ? <div className="saved-locations" aria-label="Saved places"><p>Saved places</p><ul>{savedLocations.map((location) => <li key={location.id}><button type="button" onClick={() => selectLocation(location)}>{location.name}</button><button type="button" aria-label={`Remove ${location.name}`} onClick={() => removeSavedLocation(location.id)}>Remove</button></li>)}</ul></div> : null}
           </div>
 
           {!selection ? <ForecastEmpty /> : isForecastLoading ? <ForecastLoading /> : forecast ? <ForecastRead forecast={forecast} /> : <ForecastError message={forecastError} onRetry={() => selection && void loadForecast(selection)} />}

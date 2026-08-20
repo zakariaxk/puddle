@@ -46,6 +46,8 @@ test("serves the product shell and exposes its honest no-data states", async ({ 
   await page.getByRole("button", { name: /Melbourne Beach/ }).click();
   await expect(page.getByText("Melbourne Beach, Florida is selected.")).toBeVisible();
   await expect(page.getByText("Selected location")).toBeVisible();
+  await page.getByRole("button", { name: "Save this place" }).click();
+  await expect(page.getByLabel("Saved places")).toContainText("Melbourne Beach, Florida");
   await expect(page.locator(".hero-probability")).toHaveText("52%");
   await expect(page.getByText("Most likely window: 11:30 AM–12:30 PM")).toBeVisible();
   await page.getByRole("button", { name: "Why Puddle?" }).click();
