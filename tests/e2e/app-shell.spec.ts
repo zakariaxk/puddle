@@ -61,6 +61,8 @@ test("serves the product shell and exposes its honest no-data states", async ({ 
   await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
   await map.click({ position: { x: 350, y: 300 } });
   await expect(page.locator(".search-status")).toContainText(/Selected point \(/);
+  await page.setViewportSize({ width: 320, height: 720 });
+  expect(await page.locator("html").evaluate((element) => element.scrollWidth === element.clientWidth)).toBe(true);
 });
 
 test("keeps radar still for reduced motion and recovers from a failed source", async ({ page }) => {
