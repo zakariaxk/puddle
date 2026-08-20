@@ -7,6 +7,10 @@ import "maplibre-gl/dist/maplibre-gl.css";
 export const metadata: Metadata = {
   title: "Puddle",
   description: "Know if the rain is actually coming your way.",
+  icons: {
+    icon: "/mascot/puddle-mascot-refined.png",
+    apple: "/mascot/puddle-mascot-refined.png",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

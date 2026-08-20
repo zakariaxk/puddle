@@ -10,6 +10,11 @@ import { LocationMap } from "./location-map";
 
 const horizonLabels = { 15: "15 min", 30: "30 min", 60: "1 hour", 120: "2 hours", 360: "6 hours" } as const;
 const savedLocationsKey = "puddle-saved-locations";
+const defaultSavedLocations: SavedLocation[] = [
+  { id: "home", name: "Orlando, FL", latitude: 28.5383, longitude: -81.3792 },
+  { id: "soccer", name: "Austin Tindall Sports Complex", latitude: 28.3828, longitude: -81.2768 },
+  { id: "beach", name: "Melbourne Beach", latitude: 28.0683, longitude: -80.5603 },
+];
 
 type SavedLocation = LocationSelection & { id: string };
 
@@ -27,11 +32,11 @@ export function PuddleShell() {
   const [forecastChange, setForecastChange] = useState<string | null>(null);
   const previousHourProbability = useRef<number | null>(null);
   const [isForecastLoading, setIsForecastLoading] = useState(false);
-  const [savedLocations, setSavedLocations] = useState<SavedLocation[]>([]);
+  const [savedLocations, setSavedLocations] = useState<SavedLocation[]>(defaultSavedLocations);
 
   useEffect(() => {
     try {
-      const saved = JSON.parse(window.localStorage.getItem(savedLocationsKey) ?? "[]") as SavedLocation[];
+      const saved = JSON.parse(window.localStorage.getItem(savedLocationsKey) ?? "null") as SavedLocation[] | null;
       if (Array.isArray(saved)) queueMicrotask(() => setSavedLocations(saved.filter((location) => typeof location.id === "string" && typeof location.name === "string")));
     } catch {
       window.localStorage.removeItem(savedLocationsKey);
@@ -146,6 +151,12 @@ export function PuddleShell() {
 
   function selectLocation(location: LocationSelection) {
     setSelection(location);
+    const matchingSavedLocation = savedLocations.find((saved) => saved.latitude === location.latitude && saved.longitude === location.longitude);
+    if (matchingSavedLocation && matchingSavedLocation.name !== location.name) {
+      const nextSavedLocations = savedLocations.map((saved) => saved.id === matchingSavedLocation.id ? { ...saved, name: location.name } : saved);
+      setSavedLocations(nextSavedLocations);
+      try { window.localStorage.setItem(savedLocationsKey, JSON.stringify(nextSavedLocations)); } catch { /* Local storage can be unavailable. */ }
+    }
     setForecast(null);
     setForecastChange(null);
     previousHourProbability.current = null;
@@ -161,21 +172,20 @@ export function PuddleShell() {
           <span>Puddle</span>
         </a>
         <p className="topbar-promise">Know before you go.</p>
-        <button className="quiet-button" type="button" onClick={() => setWhyOpen(true)}>
-          How Puddle works
-        </button>
+        <nav className="topbar-actions" aria-label="Primary navigation">
+          <button className="quiet-button" type="button" onClick={() => setWhyOpen(true)}>How Puddle works</button>
+          <button className="saved-link" type="button" onClick={() => document.getElementById("saved-places")?.scrollIntoView({ behavior: "smooth" })}>Saved places <span aria-hidden="true">♡</span></button>
+          <button className="menu-button" type="button" aria-label="Open menu"><span /><span /><span /></button>
+        </nav>
       </header>
-
-      <section className="app-intro" aria-labelledby="intro-title">
-        <p className="section-label">Central Florida</p>
-        <h1 id="intro-title">Is rain actually coming your way?</h1>
-        <p>Choose a place to see Puddle&apos;s clearest next-hour rain read.</p>
-      </section>
 
       <section className="weather-stage" aria-label="Puddle forecast shell">
         <div className="forecast-panel" id="forecast">
+          <section className="app-intro" aria-labelledby="intro-title">
+            <div className="intro-copy"><p className="section-label">Central Florida</p><h1 id="intro-title">Is rain actually coming your way?</h1></div>
+            <Mascot state="resting" />
+          </section>
           <div className="location-block">
-            <p className="section-label">Your place</p>
             <form className="search-form" onSubmit={handleSearch}>
               <label className="sr-only" htmlFor="place-search">Search for a Central Florida place</label>
               <input
@@ -185,7 +195,7 @@ export function PuddleShell() {
                 placeholder="Search a place or address"
                 autoComplete="off"
               />
-              <button type="submit" disabled={isSearching}>{isSearching ? "Searching" : "Search"}</button>
+              <button type="submit" aria-label={isSearching ? "Searching" : "Search"} disabled={isSearching}><span aria-hidden="true">⌕</span></button>
             </form>
             <p className="search-status" aria-live="polite">{searchMessage}</p>
             {searchResults.length ? (
@@ -200,8 +210,8 @@ export function PuddleShell() {
                 ))}
               </ul>
             ) : null}
-            {selection ? <div className="selected-location" aria-live="polite"><span>Selected location</span><strong>{selection.name}</strong><button type="button" onClick={saveLocation} disabled={savedLocations.some((location) => location.latitude === selection.latitude && location.longitude === selection.longitude)}>{savedLocations.some((location) => location.latitude === selection.latitude && location.longitude === selection.longitude) ? "Saved" : "Save this place"}</button></div> : null}
-            {savedLocations.length ? <div className="saved-locations" aria-label="Saved places"><p>Saved places</p><ul>{savedLocations.map((location) => <li key={location.id}><button type="button" onClick={() => selectLocation(location)}>{location.name}</button><button type="button" aria-label={`Remove ${location.name}`} onClick={() => removeSavedLocation(location.id)}>Remove</button></li>)}</ul></div> : null}
+            {savedLocations.length ? <div className="saved-locations" id="saved-places" aria-label="Saved places"><ul>{savedLocations.map((location) => <li key={location.id}><button type="button" aria-label={`${location.id === "home" ? "Home" : location.id === "soccer" ? "Soccer" : "Beach"} saved place`} onClick={() => selectLocation(location)}><span className="saved-icon" aria-hidden="true">{location.id === "home" ? "⌂" : location.id === "soccer" ? "◉" : "♨"}</span><span><strong>{location.id === "home" ? "Home" : location.id === "soccer" ? "Soccer" : "Beach"}</strong><small>{location.name}</small></span></button><button className="remove-saved" type="button" aria-label={`Remove ${location.id === "home" ? "Home" : location.id === "soccer" ? "Soccer" : "Beach"}`} onClick={() => removeSavedLocation(location.id)}>×</button></li>)}</ul><button className="add-place" type="button" aria-label="Add a saved place">+</button></div> : null}
+            {selection ? <div className="selected-location" aria-live="polite"><span className="location-pin" aria-hidden="true">⌖</span><span><strong>{selection.name.replace(", Florida", ", FL")}</strong><small>Updated just now</small></span><span className="sr-only">Selected location</span><button type="button" onClick={saveLocation} aria-label="Save this place">♡</button></div> : null}
           </div>
 
           {!selection ? <ForecastEmpty /> : isForecastLoading ? <ForecastLoading /> : forecast ? <ForecastRead forecast={forecast} change={forecastChange} /> : <ForecastError message={forecastError} onRetry={() => selection && void loadForecast(selection)} />}
@@ -230,7 +240,7 @@ export function PuddleShell() {
 }
 
 function ForecastEmpty() {
-  return <div className="forecast-unavailable" aria-labelledby="forecast-title"><Mascot state="resting" /><div className="forecast-copy"><p className="section-label">Next hour</p><h2 id="forecast-title">Waiting on your location</h2><p>Rain probability, timing, and confidence appear here after a place is selected.</p></div></div>;
+  return <div className="forecast-unavailable" aria-labelledby="forecast-title"><div className="forecast-copy"><p className="section-label">Next hour</p><h2 id="forecast-title">Choose a place to see your rain read.</h2><p>Rain probability, timing, and confidence appear here after a place is selected.</p><span className="sr-only">Waiting on your location</span></div></div>;
 }
 
 function ForecastLoading() {
@@ -250,8 +260,8 @@ function ForecastRead({ forecast, change }: { forecast: ConsumerForecast; change
   const isDry = hero.probabilityPercent === 0 && hero.intensity === "none";
   return <>
     <div className="forecast-read" aria-live="polite">
-      <div><p className="section-label">Chance of measurable rain in the next hour</p>{isDry ? <><p className="forecast-dry-title">Dry for now</p><p className="forecast-dry-detail">NWS guidance shows a 0% chance of measurable rain here in the next hour.</p></> : <><p className="hero-probability">{hero.probabilityPercent}<span>%</span></p><p className="forecast-summary">{hero.arrival ? `Most likely window: ${hero.arrival}` : "No meaningful rain window indicated."}</p></>}</div>
-      <dl className="forecast-details"><div><dt>Intensity</dt><dd>{hero.intensity === "none" ? "None indicated" : `${hero.intensity[0].toUpperCase()}${hero.intensity.slice(1)} rain`}</dd></div><div><dt>Confidence</dt><dd>{forecast.confidence[0].toUpperCase() + forecast.confidence.slice(1)}</dd></div></dl>
+      <div className="forecast-hero-row"><div><p className="section-label">Chance of measurable rain in the next hour</p>{isDry ? <><p className="forecast-dry-title">Dry for now</p><p className="forecast-dry-detail">NWS guidance shows a 0% chance of measurable rain here in the next hour.</p></> : <><p className="hero-probability">{hero.probabilityPercent}<span>%</span></p><p className="forecast-summary">{hero.arrival ? `Most likely window: ${hero.arrival}` : "No meaningful rain window indicated."}</p></>}</div><span className="info-mark" aria-label="Probability is the chance of measurable rain">i</span></div>
+      <dl className="forecast-details"><div><dt>Confidence</dt><dd>{forecast.confidence[0].toUpperCase() + forecast.confidence.slice(1)}</dd></div><div><dt>Intensity</dt><dd>{hero.intensity === "none" ? "None indicated" : `${hero.intensity[0].toUpperCase()}${hero.intensity.slice(1)}`}</dd></div><div><dt>Timing</dt><dd>{hero.arrival ? "Most likely" : "Not indicated"}</dd></div></dl>
       {forecast.status === "degraded" ? <p className="forecast-degraded">Reduced confidence: some live inputs are unavailable or stale.</p> : null}
       {change ? <p className="forecast-change" aria-live="polite">{change}</p> : null}
     </div>
